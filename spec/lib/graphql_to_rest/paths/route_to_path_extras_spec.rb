@@ -3,7 +3,12 @@
 
 RSpec.describe GraphqlToRest::Paths::RouteToPathExtras do
   describe '.call' do
-    subject(:call) { described_class.call(route: route) }
+    subject(:call) do
+      described_class.call(
+        route: route,
+        path_schemas_dir: path_schemas_dir
+      )
+    end
 
     let(:route) do
       GraphqlToRest::Paths::RouteDecorator.new(
@@ -19,16 +24,6 @@ RSpec.describe GraphqlToRest::Paths::RouteToPathExtras do
     let(:graphql_schema) { GraphqlToRest::DummyApp1::Schema }
 
     let(:path_schemas_dir) { 'spec/fixtures/apps/dummy_app1/app/open_api/paths' }
-
-    let(:open_api_configuration) do
-      config = GraphqlToRest::OpenApiConfiguration.new
-      config.path_schemas_dir(path_schemas_dir)
-      config
-    end
-
-    around do |example|
-      GraphqlToRest.with_configuration(open_api_configuration, &example)
-    end
 
     before do
       allow(File).to receive(:read).and_call_original

@@ -7,7 +7,8 @@ RSpec.describe GraphqlToRest::Schema do
       info: info,
       servers: servers,
       security_schemes: security_schemes,
-      graphql_schema: graphql_schema
+      graphql_schema: graphql_schema,
+      path_schemas_dir: path_schemas_dir
     )
   end
 
@@ -47,16 +48,6 @@ RSpec.describe GraphqlToRest::Schema do
   let(:graphql_schema) { GraphqlToRest::DummyApp1::Schema }
   let(:dummy_app1_path) { 'spec/fixtures/apps/dummy_app1' }
   let(:path_schemas_dir) { "#{dummy_app1_path}/app/open_api/paths" }
-
-  let(:open_api_configuration) do
-    config = GraphqlToRest::OpenApiConfiguration.new
-    config.path_schemas_dir(path_schemas_dir)
-    config
-  end
-
-  around do |example|
-    GraphqlToRest.with_configuration(open_api_configuration, &example)
-  end
 
   before do
     allow(schema).to receive(:all_rails_routes).and_return(all_rails_routes)
