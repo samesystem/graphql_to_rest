@@ -6,17 +6,8 @@ RSpec.describe GraphqlToRest::Paths::RouteToParameters do
     subject(:call) { described_class.call(route: route) }
 
     let(:route) do
-      GraphqlToRest::Paths::RouteDecorator.new(
-        rails_route: rails_route,
-        graphql_schema: graphql_schema
-      )
+      route_double(:post, '/api/v1/:some_param/users(.:format)', "users#create")
     end
-
-    let(:rails_route) do
-      rails_route_double(:post, '/api/v1/:some_param/users(.:format)', "users#create")
-    end
-
-    let(:graphql_schema) { GraphqlToRest::DummyApp1::Schema }
 
     it 'returns correct parameters' do
       expect(call.count).to eq(2)

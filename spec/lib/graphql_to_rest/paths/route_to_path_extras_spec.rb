@@ -10,18 +10,7 @@ RSpec.describe GraphqlToRest::Paths::RouteToPathExtras do
       )
     end
 
-    let(:route) do
-      GraphqlToRest::Paths::RouteDecorator.new(
-        rails_route: rails_route,
-        graphql_schema: graphql_schema
-      )
-    end
-
-    let(:rails_route) do
-      rails_route_double('post', '/api/v1/users(.:format)', "users#create")
-    end
-
-    let(:graphql_schema) { GraphqlToRest::DummyApp1::Schema }
+    let(:route) { route_double_for('users#create') }
 
     let(:path_schemas_dir) { 'spec/fixtures/apps/dummy_app1/app/open_api/paths' }
 

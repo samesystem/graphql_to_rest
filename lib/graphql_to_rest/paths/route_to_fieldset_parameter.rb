@@ -50,7 +50,7 @@ module GraphqlToRest
       end
 
       def fieldset_enum
-        type_parsers.select { |_, parser| parser.scalar? }.keys.sort
+        type_parsers.select { |_, parser| parser.deeply_scalar? }.keys.sort
       end
 
       def type_parsers

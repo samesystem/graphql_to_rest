@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'graphql_to_rest/paths'
+require 'graphql_to_rest/components'
 
 module GraphqlToRest
   # openapi.json file generator
@@ -31,7 +32,7 @@ module GraphqlToRest
     end
 
     def paths
-      rails_api_routes
+      routes
         .map { route_to_path_schema(_1) }
         .reduce(:deep_merge)
     end
@@ -51,21 +52,25 @@ module GraphqlToRest
     end
 
     def components_schemas
-      {}
+      Components::RoutesToComponentsSchemas.call(routes: routes)
     end
 
     def components_request_bodies
       {}
     end
 
+    def routes
+      @routes ||= rails_api_routes.map do |route|
+        Paths::RouteDecorator.new(
+          rails_route: route,
+          graphql_schema: graphql_schema
+        )
+      end
+    end
+
     private
 
-    def route_to_path_schema(route)
-      decorated_route = Paths::RouteDecorator.new(
-        rails_route: route,
-        graphql_schema: graphql_schema
-      )
-
+    def route_to_path_schema(decorated_route)
       Paths::RouteToPathSchema.call(
         route: decorated_route,
         path_schemas_dir: path_schemas_dir

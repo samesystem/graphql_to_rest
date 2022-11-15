@@ -8,6 +8,7 @@ module GraphqlToRest
       'string' => { type: 'string' },
       'text' => { type: 'string' },
       'integer' => { type: 'integer', format: 'int64' },
+      'int' => { type: 'integer', format: 'int64' },
       'boolean' => { type: 'boolean' },
       'float' => { type: 'number', format: 'float' },
       'decimal' => { type: 'number', format: 'double' },
@@ -27,13 +28,37 @@ module GraphqlToRest
       unwrap_type(unparsed_type)
     end
 
-    def scalar?
+    def deeply_scalar?
       inner_nullable_graphql_object < GraphQL::Schema::Scalar
+    end
+
+    def deeply_object?
+      inner_nullable_graphql_object < GraphQL::Schema::Object
+    end
+
+    def deeply_enum?
+      inner_nullable_graphql_object < GraphQL::Schema::Enum
+    end
+
+    def deeply_basic?
+      basic_type_schema.present?
+    end
+
+    def required?
+      unparsed_type.non_null?
+    end
+
+    def open_api_schema_reference
+      basic_type_schema || schema_reference
     end
 
     private
 
     delegate :graphql_name, to: :inner_nullable_graphql_object
+
+    def schema_reference
+      { '$ref' => "#/components/schemas/#{open_api_type_name}" }
+    end
 
     def basic_type_schema
       BASIC_TYPE_MAPPING[graphql_name.downcase]

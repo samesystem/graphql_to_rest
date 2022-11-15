@@ -131,6 +131,35 @@
   },
   "components": {
     "schemas": {
+      "GenderEnum": {
+        "type": "string",
+        "enum": [
+          "FEMALE",
+          "MALE"
+        ]
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "fullName": {
+            "type": "string"
+          },
+          "gender": {
+            "$ref": "#/components/schemas/GenderEnum"
+          },
+          "id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "email",
+          "fullName",
+          "id"
+        ]
+      }
     },
     "securitySchemes": {
       "Bearer": {
