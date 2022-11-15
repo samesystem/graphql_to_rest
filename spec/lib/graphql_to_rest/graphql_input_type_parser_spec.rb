@@ -36,17 +36,23 @@ RSpec.describe GraphqlToRest::GraphqlInputTypeParser do
     end
   end
 
-  describe '#scalar?' do
+  describe '#deeply_scalar?' do
     context 'when type is basic' do
       let(:unparsed_type) { GraphQL::Types::String }
 
-      it { is_expected.to be_scalar }
+      it { is_expected.to be_deeply_scalar }
     end
 
     context 'when type is GraphQL::Object' do
       let(:unparsed_type) { GraphqlToRest::DummyApp1::Types::UserCreateInputType }
 
-      it { is_expected.not_to be_scalar }
+      it { is_expected.not_to be_deeply_scalar }
+    end
+
+    context 'when type is Array with inner scalar type' do
+      let(:unparsed_type) { GraphQL::Types::String.to_list_type.to_non_null_type }
+
+      it { is_expected.to be_deeply_scalar }
     end
   end
 end

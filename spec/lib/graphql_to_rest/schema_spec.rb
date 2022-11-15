@@ -41,7 +41,7 @@ RSpec.describe GraphqlToRest::Schema do
 
   let(:all_rails_routes) do
     [
-      rails_route_double(:post, '/api/v1/users(.:format)', "users#create")
+      rails_route_double(:post, '/api/v1/users(.:format)', 'users#create')
     ]
   end
 
