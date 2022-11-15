@@ -20,9 +20,6 @@ module GraphqlToRest
 
       delegate :open_api_type_name, :inner_nullable_graphql_object, to: :type_parser, private: true
 
-      def newly_cached_schemas
-        @newly_cached_schemas ||= {}
-      end
 
       def components_schemas_for_graphql_object
         component_schema_for_graphql_object.merge(components_schemas_for_properties)
