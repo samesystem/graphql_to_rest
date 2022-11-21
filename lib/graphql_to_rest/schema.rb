@@ -52,11 +52,11 @@ module GraphqlToRest
     end
 
     def components_schemas
-      Components::RoutesToComponentsSchemas.call(routes: routes)
+      Components::Schemas::RoutesToSchemas.call(routes: routes)
     end
 
     def components_request_bodies
-      {}
+      Components::RequestBodies::RoutesToSchemas.call(routes: routes)
     end
 
     def routes

@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-
 RSpec.describe GraphqlToRest::Paths::RouteToPathSchema do
   describe '.call' do
     subject(:call) do

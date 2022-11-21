@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-
-RSpec.describe GraphqlToRest::Components::TypeToComponentsSchemas do
+RSpec.describe GraphqlToRest::Components::Schemas::TypeToSchemas do
   describe '.call' do
     subject(:call) do
       described_class.call(graphql_type: graphql_type, cached_schemas: cached_schemas)

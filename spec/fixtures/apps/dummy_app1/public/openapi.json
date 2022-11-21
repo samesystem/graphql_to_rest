@@ -169,6 +169,59 @@
       }
     },
     "requestBodies": {
+      "LocationInput": {
+        "type": "object",
+        "properties": {
+          "city": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "city",
+          "country"
+        ]
+      },
+      "UserCreateInput": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "fullName": {
+            "type": "string"
+          },
+          "gender": {
+            "$ref": "#/components/schemas/GenderEnum"
+          },
+          "location": {
+            "$ref": "#/components/requestBodies/LocationInput"
+          },
+          "wishItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/requestBodies/WishItemInput"
+            }
+          }
+        },
+        "required": [
+          "email",
+          "fullName"
+        ]
+      },
+      "WishItemInput": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      }
     }
   }
 }

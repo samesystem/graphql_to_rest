@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-
 RSpec.describe GraphqlToRest::GraphqlInputTypeParser do
   subject(:graphql_type_name_parser) { described_class.new(unparsed_type: unparsed_type) }
 
@@ -53,6 +52,26 @@ RSpec.describe GraphqlToRest::GraphqlInputTypeParser do
       let(:unparsed_type) { GraphQL::Types::String.to_list_type.to_non_null_type }
 
       it { is_expected.to be_deeply_scalar }
+    end
+  end
+
+  describe '#open_api_schema_reference' do
+    subject(:open_api_schema_reference) { graphql_type_name_parser.open_api_schema_reference }
+
+    context 'when type is basic' do
+      let(:unparsed_type) { GraphQL::Types::String }
+
+      it 'returns basic type schema' do
+        expect(open_api_schema_reference).to eq({ type: 'string' })
+      end
+    end
+
+    context 'when type is GraphQL::Object' do
+      let(:unparsed_type) { GraphqlToRest::DummyApp1::Types::UserCreateInputType }
+
+      it 'returns schema reference' do
+        expect(open_api_schema_reference).to eq({ '$ref' => '#/components/requestBodies/UserCreateInput' })
+      end
     end
   end
 end

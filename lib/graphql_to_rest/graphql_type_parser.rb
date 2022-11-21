@@ -49,12 +49,27 @@ module GraphqlToRest
     end
 
     def open_api_schema_reference
-      basic_type_schema || schema_reference
+      if list?
+        {
+          type: 'array',
+          items: inner_open_api_schema_reference
+        }
+      else
+        inner_open_api_schema_reference
+      end
+    end
+
+    def list?
+      unparsed_type.list?
     end
 
     private
 
     delegate :graphql_name, to: :inner_nullable_graphql_object
+
+    def inner_open_api_schema_reference
+      basic_type_schema || schema_reference
+    end
 
     def schema_reference
       { '$ref' => "#/components/schemas/#{open_api_type_name}" }
