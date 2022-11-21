@@ -144,5 +144,21 @@ RSpec.describe GraphqlToRest::GraphqlTypeParser do
         expect(open_api_schema_reference).to eq('$ref' => '#/components/schemas/User')
       end
     end
+
+    context 'when type is Array with inner scalar type' do
+      let(:unparsed_type) { GraphQL::Types::String.to_list_type.to_non_null_type }
+
+      it 'returns reference to object' do
+        expect(open_api_schema_reference).to eq(type: 'array', items: { type: 'string' })
+      end
+    end
+
+    context 'when type is Array with inner object type' do
+      let(:unparsed_type) { GraphqlToRest::DummyApp1::Types::UserType.to_list_type.to_non_null_type }
+
+      it 'returns reference to object' do
+        expect(open_api_schema_reference).to eq(type: 'array', items: { '$ref' => '#/components/schemas/User' })
+      end
+    end
   end
 end

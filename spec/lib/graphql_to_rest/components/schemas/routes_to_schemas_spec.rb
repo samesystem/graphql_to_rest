@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe GraphqlToRest::Components::RoutesToComponentsSchemas do
+RSpec.describe GraphqlToRest::Components::Schemas::RoutesToSchemas do
   describe '.call' do
     subject(:call) { described_class.call(routes: routes) }
 

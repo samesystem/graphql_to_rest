@@ -12,8 +12,6 @@ RSpec.describe GraphqlToRest::Schema do
     )
   end
 
-
-
   let(:security_schemes) do
     {
       'Bearer' => {
@@ -54,7 +52,6 @@ RSpec.describe GraphqlToRest::Schema do
   end
 
   describe '#as_json' do
-
     let(:openapi_json_path) { "#{dummy_app1_path}/public/openapi.json" }
     let(:dumped_json) do
       json = File.read(openapi_json_path)
