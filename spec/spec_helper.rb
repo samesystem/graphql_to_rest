@@ -1,5 +1,16 @@
 # frozen_string_literal: true
 
+if ENV['COVERAGE'] || ENV['CI']
+  require 'simplecov'
+
+  if ENV['CI']
+    require 'codecov'
+    SimpleCov.formatter = SimpleCov::Formatter::Codecov
+  end
+
+  SimpleCov.start
+end
+
 require "graphql_to_rest"
 require_relative './support/rails_routes_helper'
 require_relative './fixtures/apps/dummy_app1'
