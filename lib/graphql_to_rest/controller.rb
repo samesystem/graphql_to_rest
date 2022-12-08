@@ -8,9 +8,15 @@ module GraphqlToRest
     # Configuration for a controller action
     module ClassMethods
       def open_api
-        @open_api ||= ControllerConfiguration.new
+        @open_api ||= build_controller_configuration
         yield(@open_api) if block_given?
         @open_api
+      end
+
+      private
+
+      def build_controller_configuration
+        ControllerConfiguration.new
       end
     end
 

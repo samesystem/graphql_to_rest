@@ -11,7 +11,8 @@ if ENV['COVERAGE'] || ENV['CI']
   SimpleCov.start
 end
 
-require "graphql_to_rest"
+require 'graphql_to_rest'
+require 'factory_bot'
 require_relative './support/rails_routes_helper'
 require_relative './fixtures/apps/dummy_app1'
 
@@ -27,4 +28,10 @@ RSpec.configure do |config|
   end
 
   config.include GraphqlToRest::Test::RailsRoutesHelper
+
+  config.include FactoryBot::Syntax::Methods
+
+  config.before(:suite) do
+    FactoryBot.find_definitions
+  end
 end

@@ -3,9 +3,14 @@
 RSpec.describe GraphqlToRest::Components::RequestBodies::TypeToSchemas do
   describe '.call' do
     subject(:call) do
-      described_class.call(graphql_type: graphql_type, cached_schemas: cached_schemas)
+      described_class.call(
+        graphql_type: graphql_type,
+        cached_schemas: cached_schemas,
+        schema_builder: schema_builder
+      )
     end
 
+    let(:schema_builder) { build(:schema) }
     let(:graphql_type) { GraphqlToRest::DummyApp1::Types::UserCreateInputType }
     let(:cached_schemas) { {} }
 

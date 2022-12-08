@@ -2,9 +2,15 @@
 
 RSpec.describe GraphqlToRest::Paths::RouteToFieldsetParameter do
   describe '.call' do
-    subject(:call) { described_class.call(route: route) }
+    subject(:call) do
+      described_class.call(
+        route: route,
+        schema_builder: schema_builder
+      )
+    end
 
     let(:route) { route_double_for('users#create') }
+    let(:schema_builder) { build(:schema) }
 
     it 'returns correct schema' do
       expect(call).to eq(

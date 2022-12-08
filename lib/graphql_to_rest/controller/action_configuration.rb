@@ -12,20 +12,28 @@ module GraphqlToRest
         @path_parameters = {}
       end
 
+      def parameter_configuration_class(klass = nil)
+        @parameter_configuration_class ||= ParameterConfiguration
+        return @parameter_configuration_class if klass.nil?
+
+        @parameter_configuration_class = klass
+        self
+      end
+
       def query_parameter(name)
-        @query_parameters[name.to_s] ||= ParameterConfiguration.new(name: name.to_s)
+        @query_parameters[name.to_s] ||= build_parameter_configuration(name: name.to_s)
         param = @query_parameters[name.to_s]
         yield(param) if block_given?
         param
       end
 
       def path_parameter(name)
-        @path_parameters[name.to_s] ||= ParameterConfiguration.new(name: name.to_s)
+        @path_parameters[name.to_s] ||= build_parameter_configuration(name: name.to_s)
       end
 
       def fieldset_parameter
         @fieldset_parameter ||=
-          ParameterConfiguration.new(name: "fields[#{controller_config.model}]")
+          build_parameter_configuration(name: "fields[#{controller_config.model}]")
       end
 
       def graphql_action(name = nil)
@@ -45,6 +53,10 @@ module GraphqlToRest
       private
 
       attr_reader :controller_config
+
+      def build_parameter_configuration(**kwargs)
+        parameter_configuration_class.new(kwargs)
+      end
     end
   end
 end

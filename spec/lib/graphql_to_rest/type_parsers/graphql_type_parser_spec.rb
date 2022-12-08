@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe GraphqlToRest::GraphqlTypeParser do
+RSpec.describe GraphqlToRest::TypeParsers::GraphqlTypeParser do
   subject(:graphql_type_name_parser) { described_class.new(unparsed_type: unparsed_type) }
 
   describe '#open_api_type_name' do

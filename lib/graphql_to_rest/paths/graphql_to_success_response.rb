@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'graphql_to_rest/graphql_type_parser'
+require 'graphql_to_rest/type_parsers/build_graphql_type_parser'
 
 module GraphqlToRest
   module Paths
@@ -26,7 +26,7 @@ module GraphqlToRest
         }
       }.freeze
 
-      method_object %i[type!]
+      method_object %i[type! schema_builder!]
 
       def call
         {
@@ -70,7 +70,10 @@ module GraphqlToRest
       end
 
       def type_parser
-        @type_parser ||= GraphqlTypeParser.new(unparsed_type: type)
+        @type_parser ||= schema_builder.call_service(
+          TypeParsers::BuildGraphqlTypeParser,
+          unparsed_type: type
+        )
       end
     end
   end
