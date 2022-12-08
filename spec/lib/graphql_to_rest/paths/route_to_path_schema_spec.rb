@@ -5,13 +5,14 @@ RSpec.describe GraphqlToRest::Paths::RouteToPathSchema do
     subject(:call) do
       described_class.call(
         route: route,
-        path_schemas_dir: path_schemas_dir
+        path_schemas_dir: path_schemas_dir,
+        schema_builder: schema_builder
       )
     end
 
     let(:route) { route_double_for('users#create') }
-
     let(:path_schemas_dir) { 'spec/fixtures/apps/dummy_app1/app/open_api/paths' }
+    let(:schema_builder) { build(:schema) }
 
     before do
       allow(GraphqlToRest::Paths::RouteToPathExtras)
@@ -32,7 +33,7 @@ RSpec.describe GraphqlToRest::Paths::RouteToPathSchema do
       call
 
       expect(GraphqlToRest::Paths::RouteToParameters)
-        .to have_received(:call).with(route: route)
+        .to have_received(:call).with(route: route, schema_builder: schema_builder)
     end
 
     it 'has correct structure' do

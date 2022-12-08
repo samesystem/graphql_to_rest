@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-require 'graphql_to_rest/graphql_type_parser'
+require 'graphql_to_rest/type_parsers/build_graphql_type_parser'
 
 module GraphqlToRest
   module Components
     module Schemas
       # Converts GraphQL type to OpenAPI schema
       class TypeToSchemas
-        method_object %i[graphql_type! cached_schemas!]
+        method_object %i[graphql_type! cached_schemas! schema_builder!]
 
         def call
           return {} if cached_schemas.key?(open_api_type_name)
@@ -20,7 +20,6 @@ module GraphqlToRest
         private
 
         delegate :open_api_type_name, :inner_nullable_graphql_object, to: :type_parser, private: true
-
 
         def schemas_for_graphql_object
           schema_for_graphql_object.merge(schemas_for_properties)
@@ -59,7 +58,8 @@ module GraphqlToRest
         def schemas_for_property(property_parser, property_cached_schemas)
           newly_cached_schemas = self.class.call(
             graphql_type: property_parser.inner_nullable_graphql_object,
-            cached_schemas: property_cached_schemas
+            cached_schemas: property_cached_schemas,
+            schema_builder: schema_builder
           )
         end
 
@@ -88,7 +88,10 @@ module GraphqlToRest
         end
 
         def type_parser_for(type)
-          GraphqlTypeParser.new(unparsed_type: type)
+          schema_builder.call_service(
+            TypeParsers::BuildGraphqlTypeParser,
+            unparsed_type: type
+          )
         end
       end
     end

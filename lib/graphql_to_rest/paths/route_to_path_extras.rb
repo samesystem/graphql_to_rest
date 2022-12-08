@@ -30,7 +30,7 @@ module GraphqlToRest
         end
       end
 
-      method_object %i[route! path_schemas_dir!]
+      method_object %i[route! path_schemas_dir! schema_builder!]
 
       def call
         return {} unless File.exist?(file_path)

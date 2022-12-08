@@ -18,7 +18,7 @@ module GraphqlToRest
         end
 
         def type_parser_for(type)
-          GraphqlInputTypeParser.new(unparsed_type: type)
+          schema_builder.call_service(TypeParsers::BuildGraphqlInputTypeParser, unparsed_type: type)
         end
       end
     end

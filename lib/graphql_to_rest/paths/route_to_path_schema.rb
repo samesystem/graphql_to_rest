@@ -4,7 +4,7 @@ module GraphqlToRest
   module Paths
     # Converts rails route to path schema
     class RouteToPathSchema
-      method_object %i[route! path_schemas_dir!]
+      method_object %i[route! path_schemas_dir! schema_builder!]
 
       def call
         specs_from_controller_config
@@ -59,22 +59,32 @@ module GraphqlToRest
       end
 
       def specs_from_file
-        @specs_from_file ||= RouteToPathExtras.call(
+        @specs_from_file ||= schema_builder.call_service(
+          RouteToPathExtras,
           route: route,
           path_schemas_dir: path_schemas_dir
         ).deep_stringify_keys
       end
 
       def parameters
-        Paths::RouteToParameters.call(route: route)
+        schema_builder.call_service(
+          Paths::RouteToParameters,
+          route: route
+        )
       end
 
       def responses
-        Paths::GraphqlToSuccessResponse.call(type: return_type)
+        schema_builder.call_service(
+          Paths::GraphqlToSuccessResponse,
+          type: return_type
+        )
       end
 
       def request_body
-        Paths::GraphqlToPathRequestBody.call(graphql_input: input_type)
+        schema_builder.call_service(
+          Paths::GraphqlToPathRequestBody,
+          graphql_input: input_type
+        )
       end
     end
   end

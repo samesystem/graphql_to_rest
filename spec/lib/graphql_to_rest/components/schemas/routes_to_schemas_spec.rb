@@ -2,10 +2,16 @@
 
 RSpec.describe GraphqlToRest::Components::Schemas::RoutesToSchemas do
   describe '.call' do
-    subject(:call) { described_class.call(routes: routes) }
+    subject(:call) do
+      described_class.call(
+        routes: routes,
+        schema_builder: schema_builder
+      )
+    end
 
     let(:routes) { [route] }
     let(:route) { route_double_for('users#create') }
+    let(:schema_builder) { build(:schema) }
 
     it 'returns correct schemas for return type and inner enum types' do
       expect(call.keys).to match_array(%w[User GenderEnum])

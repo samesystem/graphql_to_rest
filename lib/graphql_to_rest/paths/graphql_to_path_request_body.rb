@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require 'graphql_to_rest/graphql_input_type_parser'
+require 'graphql_to_rest/type_parsers/build_graphql_input_type_parser'
 
 module GraphqlToRest
   module Paths
     # Converts GraphQL type to request body used in OpenAPI paths part
     class GraphqlToPathRequestBody
-      method_object [:graphql_input!, { extra_specs: {} }]
+      method_object [:graphql_input!, :schema_builder!, { extra_specs: {} }]
 
       def call
         {
@@ -52,7 +52,10 @@ module GraphqlToRest
       end
 
       def type_parser
-        @type_parser ||= GraphqlInputTypeParser.new(unparsed_type: graphql_input)
+        @type_parser ||= schema_builder.call_service(
+          TypeParsers::BuildGraphqlInputTypeParser,
+          unparsed_type: graphql_input
+        )
       end
     end
   end

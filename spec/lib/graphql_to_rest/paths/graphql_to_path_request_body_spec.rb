@@ -2,10 +2,17 @@
 
 RSpec.describe GraphqlToRest::Paths::GraphqlToPathRequestBody do
   describe '.call' do
-    subject(:call) { described_class.call(graphql_input: graphql_input, extra_specs: {}) }
+    subject(:call) do
+      described_class.call(
+        graphql_input: graphql_input,
+        extra_specs: {},
+        schema_builder: schema_builder
+      )
+      end
 
     let(:graphql_input) { GraphqlToRest::DummyApp1::Types::UserCreateInputType }
     let(:extra_specs) { {} }
+    let(:schema_builder) { build(:schema) }
 
     it 'returns correct schema' do
       expect(call).to eq(

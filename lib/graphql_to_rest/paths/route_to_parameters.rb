@@ -11,7 +11,7 @@ module GraphqlToRest
         }
       }.freeze
 
-      method_object %i[route!]
+      method_object %i[route! schema_builder!]
 
       def call
         [fieldset_parameter, *path_parameters]
@@ -22,7 +22,10 @@ module GraphqlToRest
       delegate :action_config, :return_type, to: :route, private: true
 
       def fieldset_parameter
-        RouteToFieldsetParameter.call(route: route)
+        schema_builder.call_service(
+          RouteToFieldsetParameter,
+          route: route
+        )
       end
 
       def path_parameters

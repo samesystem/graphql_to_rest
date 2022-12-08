@@ -2,7 +2,14 @@
 
 RSpec.describe GraphqlToRest::Paths::RouteToParameters do
   describe '.call' do
-    subject(:call) { described_class.call(route: route) }
+    subject(:call) do
+      described_class.call(
+        route: route,
+        schema_builder: schema_builder
+      )
+    end
+
+    let(:schema_builder) { build(:schema) }
 
     let(:route) do
       route_double(:post, '/api/v1/:some_param/users(.:format)', "users#create")

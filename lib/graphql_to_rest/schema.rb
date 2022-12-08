@@ -52,11 +52,14 @@ module GraphqlToRest
     end
 
     def components_schemas
-      Components::Schemas::RoutesToSchemas.call(routes: routes)
+      call_service(
+        Components::Schemas::RoutesToSchemas,
+        routes: routes
+      )
     end
 
     def components_request_bodies
-      Components::RequestBodies::RoutesToSchemas.call(routes: routes)
+      call_service(Components::RequestBodies::RoutesToSchemas, routes: routes)
     end
 
     def routes
@@ -68,10 +71,15 @@ module GraphqlToRest
       end
     end
 
+    def call_service(service, **kwargs)
+      service.call(**kwargs, schema_builder: self)
+    end
+
     private
 
     def route_to_path_schema(decorated_route)
-      Paths::RouteToPathSchema.call(
+      call_service(
+        Paths::RouteToPathSchema,
         route: decorated_route,
         path_schemas_dir: path_schemas_dir
       )
@@ -90,14 +98,6 @@ module GraphqlToRest
 
     def all_rails_routes
       Rails.application.routes.routes
-    end
-
-    def components_schema_for(type)
-      GraphqlToComponentsSchema.call(type: type)
-    end
-
-    def components_request_body_for(graphql_input_class, subtype: nil)
-      GraphqlToComponentsRequestBody.call(type: graphql_input_class, subtype: subtype)
     end
   end
 end

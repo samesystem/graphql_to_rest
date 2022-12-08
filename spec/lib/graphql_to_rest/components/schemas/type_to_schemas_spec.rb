@@ -3,11 +3,16 @@
 RSpec.describe GraphqlToRest::Components::Schemas::TypeToSchemas do
   describe '.call' do
     subject(:call) do
-      described_class.call(graphql_type: graphql_type, cached_schemas: cached_schemas)
+      described_class.call(
+        graphql_type: graphql_type,
+        cached_schemas: cached_schemas,
+        schema_builder: schema_builder
+      )
     end
 
     let(:graphql_type) { GraphqlToRest::DummyApp1::Types::UserType }
     let(:cached_schemas) { {} }
+    let(:schema_builder) { build(:schema) }
 
     it 'returns correct schemas for return type and inner enum types' do
       expect(call.keys).to match_array(%w[User GenderEnum])

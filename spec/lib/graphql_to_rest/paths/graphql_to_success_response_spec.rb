@@ -2,9 +2,15 @@
 
 RSpec.describe GraphqlToRest::Paths::GraphqlToSuccessResponse do
   describe '.call' do
-    subject(:call) { described_class.call(type: type) }
+    subject(:call) do
+      described_class.call(
+        type: type,
+        schema_builder: schema_builder
+      )
+    end
 
     let(:type) { GraphqlToRest::DummyApp1::Types::UserType }
+    let(:schema_builder) { build(:schema) }
 
     it 'returns correct schema' do
       actual_schema = call[:'200'][:content][:'application/json'][:schema]

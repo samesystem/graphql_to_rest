@@ -13,7 +13,7 @@ module GraphqlToRest
         required: false
       }.freeze
 
-      method_object %i[route!]
+      method_object %i[route! schema_builder!]
 
       def call
         {
@@ -55,7 +55,7 @@ module GraphqlToRest
 
       def type_parsers
         @type_parsers ||= graphql_object.fields.transform_values do |field|
-          GraphqlTypeParser.new(unparsed_type: field.type)
+          build_type_parser(field.type)
         end
       end
 
@@ -75,7 +75,14 @@ module GraphqlToRest
       end
 
       def type_parser
-        @type_parser ||= GraphqlTypeParser.new(unparsed_type: return_type)
+        @type_parser ||= build_type_parser(return_type)
+      end
+
+      def build_type_parser(unparsed_type)
+        schema_builder.call_service(
+          TypeParsers::BuildGraphqlTypeParser,
+          unparsed_type: unparsed_type
+        )
       end
     end
   end
