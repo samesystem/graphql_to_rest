@@ -23,7 +23,7 @@ module GraphqlToRest
               'parameters' => parameters,
               'requestBody' => request_body,
               'responses' => responses
-            }
+            }.compact
           }
         }.deep_stringify_keys
       end
@@ -81,6 +81,8 @@ module GraphqlToRest
       end
 
       def request_body
+        return nil if input_type.nil?
+
         schema_builder.call_service(
           Paths::GraphqlToPathRequestBody,
           graphql_input: input_type

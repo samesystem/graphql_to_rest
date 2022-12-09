@@ -12,6 +12,8 @@ module GraphqlToRest
       end
 
       def input_type
+        return nil if action_config.graphql_input_type_path.empty?
+
         nesting_keys = action_config.graphql_input_type_path.map(&:to_s)
         graphql_schema_action.arguments[*nesting_keys].type
       end

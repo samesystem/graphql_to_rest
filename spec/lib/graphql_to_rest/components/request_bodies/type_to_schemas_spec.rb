@@ -51,5 +51,11 @@ RSpec.describe GraphqlToRest::Components::RequestBodies::TypeToSchemas do
         required: %w[name]
       )
     end
+
+    context 'when graphql_type is nil' do
+      let(:graphql_type) { nil }
+
+      it { is_expected.to eq({}) }
+    end
   end
 end

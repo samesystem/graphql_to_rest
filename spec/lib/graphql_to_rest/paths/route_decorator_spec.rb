@@ -13,10 +13,18 @@ RSpec.describe GraphqlToRest::Paths::RouteDecorator do
     end
 
     describe '#input_type' do
-      subject(:input_type) { route_decorator.input_type.to_type_signature }
+      subject(:input_type) { route_decorator.input_type }
 
       it 'returns correct input type' do
-        expect(input_type).to eq('UserCreateInput!')
+        expect(input_type.to_type_signature).to eq('UserCreateInput!')
+      end
+
+      context 'when route does not have graphql input type' do
+        let(:rails_route) do
+          rails_route_double('get', '/api/v1/:some_param/users/:id', "users#show")
+        end
+
+        it { is_expected.to be_nil }
       end
     end
 

@@ -40,5 +40,14 @@ RSpec.describe GraphqlToRest::Paths::RouteToPathSchema do
       path_spec = call.fetch('/users').fetch('post')
       expect(path_spec.keys).to match_array(%w[parameters requestBody responses])
     end
+
+    context 'with route without input' do
+      let(:route) { route_double_for('users#show') }
+
+      it 'does not generate requestBody' do
+        path_spec = call.fetch('/users/{id}').fetch('get')
+        expect(path_spec.keys).not_to include('requestBody')
+      end
+    end
   end
 end
