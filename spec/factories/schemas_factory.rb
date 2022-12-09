@@ -21,8 +21,12 @@ FactoryBot.define do
         }
       }
     end
-    graphql_schema { GraphqlToRest::DummyApp1::Schema }
-    path_schemas_dir { 'spec/fixtures/apps/dummy_app1' }
+    graphql_schema { GraphqlToRest::DummyAppShared::Schema }
+    path_schemas_dir { 'spec/fixtures/apps/dummy_app_shared' }
+
+    trait :json_api do
+      graphql_schema { GraphqlToRest::DummyAppJsonApi::Schema }
+    end
 
     initialize_with do
       new(

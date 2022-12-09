@@ -11,7 +11,7 @@ RSpec.describe GraphqlToRest::Paths::RouteToPathExtras do
     end
 
     let(:route) { route_double_for('users#create') }
-    let(:path_schemas_dir) { 'spec/fixtures/apps/dummy_app1/app/open_api/paths' }
+    let(:path_schemas_dir) { 'spec/fixtures/apps/dummy_app_json_api/app/open_api/paths' }
     let(:schema_builder) { build(:schema) }
 
     before do
@@ -20,8 +20,11 @@ RSpec.describe GraphqlToRest::Paths::RouteToPathExtras do
 
     it 'reads schema details from file' do
       call
+      expected_path =
+        'spec/fixtures/apps/dummy_app_json_api/' \
+        'app/open_api/paths/' \
+        'graphql_to_rest/dummy_app_json_api/api/v1/users_controller.yml'
 
-      expected_path = 'spec/fixtures/apps/dummy_app1/app/open_api/paths/graphql_to_rest/dummy_app1/api/v1/users_controller.yml'
       expect(File).to have_received(:read).with(expected_path)
     end
 

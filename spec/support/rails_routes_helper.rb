@@ -3,7 +3,7 @@
 module GraphqlToRest
   module Test
     module RailsRoutesHelper
-      def rails_route_double(http_method, path, controller_and_action, app: 'dummy_app1')
+      def rails_route_double(http_method, path, controller_and_action, app: 'dummy_app_json_api')
         path_double = double('RailsRoutePth', spec: path)
         controller, action = controller_and_action.split('#')
 
@@ -17,12 +17,12 @@ module GraphqlToRest
         )
       end
 
-      def route_double(http_method, path, controller_and_action, app: 'dummy_app1')
+      def route_double(http_method, path, controller_and_action, app: 'dummy_app_json_api')
         route = rails_route_double(http_method, path, controller_and_action, app: app)
 
         GraphqlToRest::Paths::RouteDecorator.new(
           rails_route: route,
-          graphql_schema: GraphqlToRest::DummyApp1::Schema
+          graphql_schema: GraphqlToRest::DummyAppShared::Schema
         )
       end
 

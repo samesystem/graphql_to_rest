@@ -6,7 +6,7 @@ RSpec.describe GraphqlToRest::Paths::RouteDecorator do
       described_class.new(rails_route: rails_route, graphql_schema: graphql_schema)
     end
 
-    let(:graphql_schema) { GraphqlToRest::DummyApp1::Schema }
+    let(:graphql_schema) { GraphqlToRest::DummyAppShared::Schema }
 
     let(:rails_route) do
       rails_route_double('post', '/api/v1/:some_param/users(.:format)', "users#create")
@@ -32,7 +32,7 @@ RSpec.describe GraphqlToRest::Paths::RouteDecorator do
       subject(:action_config) { route_decorator.action_config }
 
       it 'returns correct action config' do
-        expect(action_config).to be_a(GraphqlToRest::Controller::ActionConfiguration)
+        expect(action_config).to be_a(GraphqlToRest::Controller::JsonApi::ActionConfiguration)
       end
     end
 
@@ -40,7 +40,7 @@ RSpec.describe GraphqlToRest::Paths::RouteDecorator do
       subject(:controller_config) { route_decorator.controller_config }
 
       it 'returns correct controller config' do
-        expect(controller_config).to be_a(GraphqlToRest::Controller::ControllerConfiguration)
+        expect(controller_config).to be_a(GraphqlToRest::Controller::JsonApi::ControllerConfiguration)
       end
     end
 
@@ -80,7 +80,8 @@ RSpec.describe GraphqlToRest::Paths::RouteDecorator do
       subject(:controller_class) { route_decorator.controller_class }
 
       it 'returns correct controller class' do
-        expect(controller_class).to eq(GraphqlToRest::DummyApp1::Api::V1::UsersController)
+        expect(controller_class)
+          .to eq(GraphqlToRest::DummyAppJsonApi::Api::V1::UsersController)
       end
     end
   end

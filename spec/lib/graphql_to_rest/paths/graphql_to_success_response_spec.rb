@@ -9,7 +9,7 @@ RSpec.describe GraphqlToRest::Paths::GraphqlToSuccessResponse do
       )
     end
 
-    let(:type) { GraphqlToRest::DummyApp1::Types::UserType }
+    let(:type) { GraphqlToRest::DummyAppShared::Types::UserType }
     let(:schema_builder) { build(:schema) }
 
     it 'returns correct schema' do

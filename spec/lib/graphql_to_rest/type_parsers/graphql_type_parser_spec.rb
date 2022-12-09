@@ -13,7 +13,7 @@ RSpec.describe GraphqlToRest::TypeParsers::GraphqlTypeParser do
     end
 
     context 'when type is GraphQL::Object' do
-      let(:unparsed_type) { GraphqlToRest::DummyApp1::Types::UserType.to_non_null_type }
+      let(:unparsed_type) { GraphqlToRest::DummyAppShared::Types::UserType.to_non_null_type }
 
       it { is_expected.to eq('User') }
     end
@@ -22,13 +22,13 @@ RSpec.describe GraphqlToRest::TypeParsers::GraphqlTypeParser do
   describe '#inner_nullable_graphql_object' do
     subject(:inner_nullable_graphql_object) { graphql_type_name_parser.inner_nullable_graphql_object }
 
-    let(:unparsed_type) { GraphqlToRest::DummyApp1::Types::UserType.to_non_null_type }
+    let(:unparsed_type) { GraphqlToRest::DummyAppShared::Types::UserType.to_non_null_type }
 
     context 'when type is GraphQL::Object' do
-      let(:unparsed_type) { GraphqlToRest::DummyApp1::Types::UserType.to_non_null_type }
+      let(:unparsed_type) { GraphqlToRest::DummyAppShared::Types::UserType.to_non_null_type }
 
       it 'returns unwrapped type' do
-        expect(inner_nullable_graphql_object).to eq(GraphqlToRest::DummyApp1::Types::UserType)
+        expect(inner_nullable_graphql_object).to eq(GraphqlToRest::DummyAppShared::Types::UserType)
       end
     end
   end
@@ -41,7 +41,7 @@ RSpec.describe GraphqlToRest::TypeParsers::GraphqlTypeParser do
     end
 
     context 'when type is GraphQL::Object' do
-      let(:unparsed_type) { GraphqlToRest::DummyApp1::Types::UserType }
+      let(:unparsed_type) { GraphqlToRest::DummyAppShared::Types::UserType }
 
       it { is_expected.not_to be_deeply_scalar }
     end
@@ -61,7 +61,7 @@ RSpec.describe GraphqlToRest::TypeParsers::GraphqlTypeParser do
     end
 
     context 'when type is GraphQL::Object' do
-      let(:unparsed_type) { GraphqlToRest::DummyApp1::Types::UserType }
+      let(:unparsed_type) { GraphqlToRest::DummyAppShared::Types::UserType }
 
       it { is_expected.to be_deeply_object }
     end
@@ -73,7 +73,7 @@ RSpec.describe GraphqlToRest::TypeParsers::GraphqlTypeParser do
     end
 
     context 'when type is Array with inner object type' do
-      let(:unparsed_type) { GraphqlToRest::DummyApp1::Types::UserType.to_list_type.to_non_null_type }
+      let(:unparsed_type) { GraphqlToRest::DummyAppShared::Types::UserType.to_list_type.to_non_null_type }
 
       it { is_expected.to be_deeply_object }
     end
@@ -87,7 +87,7 @@ RSpec.describe GraphqlToRest::TypeParsers::GraphqlTypeParser do
     end
 
     context 'when type is GraphQL::Object' do
-      let(:unparsed_type) { GraphqlToRest::DummyApp1::Types::UserType }
+      let(:unparsed_type) { GraphqlToRest::DummyAppShared::Types::UserType }
 
       it { is_expected.not_to be_deeply_enum }
     end
@@ -99,13 +99,13 @@ RSpec.describe GraphqlToRest::TypeParsers::GraphqlTypeParser do
     end
 
     context 'when type is Array with inner object type' do
-      let(:unparsed_type) { GraphqlToRest::DummyApp1::Types::UserType.to_list_type.to_non_null_type }
+      let(:unparsed_type) { GraphqlToRest::DummyAppShared::Types::UserType.to_list_type.to_non_null_type }
 
       it { is_expected.not_to be_deeply_enum }
     end
 
     context 'when type is Array with inner enum type' do
-      let(:unparsed_type) { GraphqlToRest::DummyApp1::Types::GenderEnum.to_list_type.to_non_null_type }
+      let(:unparsed_type) { GraphqlToRest::DummyAppShared::Types::GenderEnum.to_list_type.to_non_null_type }
 
       it { is_expected.to be_deeply_enum }
     end
@@ -138,7 +138,7 @@ RSpec.describe GraphqlToRest::TypeParsers::GraphqlTypeParser do
     end
 
     context 'when type is GraphQL::Object' do
-      let(:unparsed_type) { GraphqlToRest::DummyApp1::Types::UserType }
+      let(:unparsed_type) { GraphqlToRest::DummyAppShared::Types::UserType }
 
       it 'returns reference to object' do
         expect(open_api_schema_reference).to eq('$ref' => '#/components/schemas/User')
@@ -154,7 +154,7 @@ RSpec.describe GraphqlToRest::TypeParsers::GraphqlTypeParser do
     end
 
     context 'when type is Array with inner object type' do
-      let(:unparsed_type) { GraphqlToRest::DummyApp1::Types::UserType.to_list_type.to_non_null_type }
+      let(:unparsed_type) { GraphqlToRest::DummyAppShared::Types::UserType.to_list_type.to_non_null_type }
 
       it 'returns reference to object' do
         expect(open_api_schema_reference).to eq(type: 'array', items: { '$ref' => '#/components/schemas/User' })
