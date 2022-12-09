@@ -11,7 +11,7 @@ RSpec.describe GraphqlToRest::Components::RequestBodies::TypeToSchemas do
     end
 
     let(:schema_builder) { build(:schema) }
-    let(:graphql_type) { GraphqlToRest::DummyApp1::Types::UserCreateInputType }
+    let(:graphql_type) { GraphqlToRest::DummyAppShared::Types::UserCreateInputType }
     let(:cached_schemas) { {} }
 
     it 'returns correct schemas for return type and inner types' do

@@ -10,7 +10,7 @@ RSpec.describe GraphqlToRest::Components::Schemas::TypeToSchemas do
       )
     end
 
-    let(:graphql_type) { GraphqlToRest::DummyApp1::Types::UserType }
+    let(:graphql_type) { GraphqlToRest::DummyAppShared::Types::UserType }
     let(:cached_schemas) { {} }
     let(:schema_builder) { build(:schema) }
 

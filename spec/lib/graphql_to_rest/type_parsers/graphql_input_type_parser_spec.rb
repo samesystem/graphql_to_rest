@@ -15,7 +15,7 @@ RSpec.describe GraphqlToRest::TypeParsers::GraphqlInputTypeParser do
     end
 
     context 'when type is GraphQL::Object' do
-      let(:unparsed_type) { GraphqlToRest::DummyApp1::Types::UserCreateInputType.to_non_null_type }
+      let(:unparsed_type) { GraphqlToRest::DummyAppShared::Types::UserCreateInputType.to_non_null_type }
 
       it { is_expected.to eq('UserCreateInput') }
     end
@@ -24,13 +24,13 @@ RSpec.describe GraphqlToRest::TypeParsers::GraphqlInputTypeParser do
   describe '#inner_nullable_graphql_object' do
     subject(:inner_nullable_graphql_object) { graphql_type_name_parser.inner_nullable_graphql_object }
 
-    let(:unparsed_type) { GraphqlToRest::DummyApp1::Types::UserCreateInputType.to_non_null_type }
+    let(:unparsed_type) { GraphqlToRest::DummyAppShared::Types::UserCreateInputType.to_non_null_type }
 
     context 'when type is GraphQL::Object' do
-      let(:unparsed_type) { GraphqlToRest::DummyApp1::Types::UserCreateInputType.to_non_null_type }
+      let(:unparsed_type) { GraphqlToRest::DummyAppShared::Types::UserCreateInputType.to_non_null_type }
 
       it 'returns unwrapped type' do
-        expect(inner_nullable_graphql_object).to eq(GraphqlToRest::DummyApp1::Types::UserCreateInputType)
+        expect(inner_nullable_graphql_object).to eq(GraphqlToRest::DummyAppShared::Types::UserCreateInputType)
       end
     end
   end
@@ -43,7 +43,7 @@ RSpec.describe GraphqlToRest::TypeParsers::GraphqlInputTypeParser do
     end
 
     context 'when type is GraphQL::Object' do
-      let(:unparsed_type) { GraphqlToRest::DummyApp1::Types::UserCreateInputType }
+      let(:unparsed_type) { GraphqlToRest::DummyAppShared::Types::UserCreateInputType }
 
       it { is_expected.not_to be_deeply_scalar }
     end
@@ -67,7 +67,7 @@ RSpec.describe GraphqlToRest::TypeParsers::GraphqlInputTypeParser do
     end
 
     context 'when type is GraphQL::Object' do
-      let(:unparsed_type) { GraphqlToRest::DummyApp1::Types::UserCreateInputType }
+      let(:unparsed_type) { GraphqlToRest::DummyAppShared::Types::UserCreateInputType }
 
       it 'returns schema reference' do
         expect(open_api_schema_reference).to eq({ '$ref' => '#/components/requestBodies/UserCreateInput' })

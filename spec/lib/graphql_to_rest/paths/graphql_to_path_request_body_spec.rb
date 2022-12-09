@@ -10,7 +10,7 @@ RSpec.describe GraphqlToRest::Paths::GraphqlToPathRequestBody do
       )
       end
 
-    let(:graphql_input) { GraphqlToRest::DummyApp1::Types::UserCreateInputType }
+    let(:graphql_input) { GraphqlToRest::DummyAppShared::Types::UserCreateInputType }
     let(:extra_specs) { {} }
     let(:schema_builder) { build(:schema) }
 
