@@ -14,7 +14,7 @@ end
 require 'graphql_to_rest'
 require 'factory_bot'
 require_relative './support/rails_routes_helper'
-require_relative './fixtures/apps/dummy_app1'
+require_relative './fixtures/apps/dummy_app_json_api'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

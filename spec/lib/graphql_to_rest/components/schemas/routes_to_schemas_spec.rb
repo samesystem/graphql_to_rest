@@ -11,7 +11,7 @@ RSpec.describe GraphqlToRest::Components::Schemas::RoutesToSchemas do
 
     let(:routes) { [route] }
     let(:route) { route_double_for('users#create') }
-    let(:schema_builder) { build(:schema) }
+    let(:schema_builder) { build(:schema, :json_api) }
 
     it 'returns correct schemas for return type and inner enum types' do
       expect(call.keys).to match_array(%w[User GenderEnum])

@@ -11,7 +11,7 @@ RSpec.describe GraphqlToRest::Paths::RouteToPathSchema do
     end
 
     let(:route) { route_double_for('users#create') }
-    let(:path_schemas_dir) { 'spec/fixtures/apps/dummy_app1/app/open_api/paths' }
+    let(:path_schemas_dir) { 'spec/fixtures/apps/dummy_app_json_api/app/open_api/paths' }
     let(:schema_builder) { build(:schema) }
 
     before do
