@@ -7,6 +7,12 @@ module GraphqlToRest
     module RequestBodies
       # Converts GraphQL type to OpenAPI requestBodies schemas
       class TypeToSchemas < GraphqlToRest::Components::Schemas::TypeToSchemas
+        def call
+          return {} if graphql_type.nil?
+
+          super
+        end
+
         private
 
         def schema_for_graphql_enum
