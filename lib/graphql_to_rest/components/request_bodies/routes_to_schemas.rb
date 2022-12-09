@@ -24,6 +24,8 @@ module GraphqlToRest
 
         def schemas
           routes.each.reduce({}) do |cached_schemas, route|
+            next cached_schemas if route.input_type.nil?
+
             new_schemas = components_schemas_for(route, cached_schemas)
             cached_schemas.merge(new_schemas)
           end

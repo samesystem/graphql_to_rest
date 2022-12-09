@@ -30,6 +30,8 @@ module GraphqlToRest
         case action
         when 'users#create'
           route_double('post', '/api/v1/users(.:format)', "users#create")
+        when 'users#show'
+          route_double('get', '/api/v1/users/:id', "users#show")
         else
           raise "Unknown action: #{action}"
         end
