@@ -42,6 +42,13 @@ module GraphqlToRest
           self
         end
 
+        def serializers
+          @serializers ||= begin
+            require 'graphql_to_rest/schema/basic/serializers'
+            Schema::Basic::Serializers.new
+          end
+        end
+
         private
 
         attr_reader :controller_config

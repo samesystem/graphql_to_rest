@@ -12,6 +12,8 @@ if ENV['COVERAGE'] || ENV['CI']
 end
 
 require 'graphql_to_rest'
+require 'graphql_to_rest/schema/basic/serializers'
+require 'graphql_to_rest/schema/json_api/serializers'
 require 'factory_bot'
 require_relative './support/rails_routes_helper'
 require_relative './fixtures/apps/dummy_app_json_api'

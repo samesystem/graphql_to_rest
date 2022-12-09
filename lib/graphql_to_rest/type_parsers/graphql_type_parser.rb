@@ -5,17 +5,19 @@ module GraphqlToRest
     # Converts GraphQL type to OpenAPI schema
     class GraphqlTypeParser
       BASIC_TYPE_MAPPING = {
-        'id' => { type: 'string' },
-        'string' => { type: 'string' },
-        'text' => { type: 'string' },
-        'integer' => { type: 'integer', format: 'int64' },
-        'int' => { type: 'integer', format: 'int64' },
         'boolean' => { type: 'boolean' },
-        'float' => { type: 'number', format: 'float' },
-        'decimal' => { type: 'number', format: 'double' },
-        'iso8601date' => { type: 'string', format: 'date' },
         'date' => { type: 'string', format: 'date' },
         'datetime' => { type: 'string', format: 'date-time' },
+        'decimal' => { type: 'number', format: 'double' },
+        'float' => { type: 'number', format: 'float' },
+        'id' => { type: 'string' },
+        'int' => { type: 'integer', format: 'int64' },
+        'integer' => { type: 'integer', format: 'int64' },
+        'iso8601datetime' => { type: 'string', format: 'date-time' },
+        'iso8601date' => { type: 'string', format: 'date' },
+        'json' => { type: 'object', additionalProperties: true },
+        'string' => { type: 'string' },
+        'text' => { type: 'string' },
         'time' => { type: 'string', format: 'time' }
       }.freeze
 

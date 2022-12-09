@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-
 RSpec.describe GraphqlToRest::Controller::JsonApi::ActionConfiguration do
   subject(:action_configuration) { described_class.new(controller_config: controller_config) }
 
@@ -13,7 +12,7 @@ RSpec.describe GraphqlToRest::Controller::JsonApi::ActionConfiguration do
 
     it 'always returns query parameter configuration' do
       expect(query_parameter)
-        .to be_a(GraphqlToRest::Controller::JsonApi::ParameterConfiguration)
+        .to be_a(GraphqlToRest::Controller::Basic::ParameterConfiguration)
     end
   end
 
@@ -24,7 +23,7 @@ RSpec.describe GraphqlToRest::Controller::JsonApi::ActionConfiguration do
 
     it 'always returns path parameter configuration' do
       expect(path_parameter)
-        .to be_a(GraphqlToRest::Controller::JsonApi::ParameterConfiguration)
+        .to be_a(GraphqlToRest::Controller::Basic::ParameterConfiguration)
     end
   end
 
@@ -33,7 +32,7 @@ RSpec.describe GraphqlToRest::Controller::JsonApi::ActionConfiguration do
 
     it 'returns parameter configuration' do
       expect(fieldset_parameter)
-        .to be_a(GraphqlToRest::Controller::JsonApi::ParameterConfiguration)
+        .to be_a(GraphqlToRest::Controller::Basic::ParameterConfiguration)
     end
   end
 

@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-require 'graphql_to_rest/paths'
-require 'graphql_to_rest/components'
+require 'graphql_to_rest/schema/route_decorator'
+require 'graphql_to_rest/schema/routes_to_components_request_bodies'
+require 'graphql_to_rest/schema/routes_to_components_schemas'
 
 module GraphqlToRest
   # openapi.json file generator
@@ -10,13 +11,14 @@ module GraphqlToRest
 
     attr_reader :tags, :servers, :info, :security_schemes, :graphql_schema, :path_schemas_dir
 
-    def initialize(tags: [], servers: [], info: {}, security_schemes: [], graphql_schema:, path_schemas_dir:)
+    def initialize(tags: [], servers: [], info: {}, security_schemes: [], graphql_schema:, path_schemas_dir:, rails_routes: nil)
       @tags = tags
       @servers = servers
       @info = info
       @security_schemes = security_schemes
       @graphql_schema = graphql_schema
       @path_schemas_dir = path_schemas_dir
+      @rails_routes = rails_routes || Rails.application.routes.routes
     end
 
     def as_json
@@ -33,7 +35,7 @@ module GraphqlToRest
 
     def paths
       routes
-        .map { route_to_path_schema(_1) }
+        .map { _1.open_api_json_for('paths.{path}.{method}') }
         .reduce(:deep_merge)
     end
 
@@ -52,21 +54,18 @@ module GraphqlToRest
     end
 
     def components_schemas
-      call_service(
-        Components::Schemas::RoutesToSchemas,
-        routes: routes
-      )
+      RoutesToComponentsSchemas.call(routes: routes)
     end
 
     def components_request_bodies
-      call_service(Components::RequestBodies::RoutesToSchemas, routes: routes)
+      RoutesToComponentsRequestBodies.call(routes: routes)
     end
 
     def routes
       @routes ||= rails_api_routes.map do |route|
-        Paths::RouteDecorator.new(
+        RouteDecorator.new(
           rails_route: route,
-          graphql_schema: graphql_schema
+          schema_builder: self
         )
       end
     end
@@ -77,27 +76,17 @@ module GraphqlToRest
 
     private
 
-    def route_to_path_schema(decorated_route)
-      call_service(
-        Paths::RouteToPathSchema,
-        route: decorated_route,
-        path_schemas_dir: path_schemas_dir
-      )
-    end
+    attr_reader :rails_routes
 
     def server_urls
       @server_urls ||= servers.map { _1[:url] }
     end
 
     def rails_api_routes
-      all_rails_routes.select do |route|
+      rails_routes.select do |route|
         route_url = route.path.spec.to_s
         server_urls.any? { |prefix| route_url.start_with?(prefix) }
       end
-    end
-
-    def all_rails_routes
-      Rails.application.routes.routes
     end
   end
 end

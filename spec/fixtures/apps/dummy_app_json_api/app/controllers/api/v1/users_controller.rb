@@ -12,11 +12,16 @@ module GraphqlToRest
 
             c.action(:show) do |a|
               a.graphql_action(:user)
+              a.fieldset_parameter
+               .nested_fields('posts.id')
+               .default_value(%i[id email])
             end
 
             c.action(:create) do |a|
               a.graphql_action(:createUser)
-              a.fieldset_parameter.default_value(%i[id email])
+              a.fieldset_parameter
+               .nested_fields('posts.id')
+               .default_value(%i[id email])
               a.graphql_input_type_path(:input)
             end
           end
