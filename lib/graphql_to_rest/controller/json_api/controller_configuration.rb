@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'graphql_to_rest/controller/basic/controller_configuration'
-require 'graphql_to_rest/controller/json_api/action_configuration'
+require_relative './action_configuration'
 
 module GraphqlToRest
   module Controller

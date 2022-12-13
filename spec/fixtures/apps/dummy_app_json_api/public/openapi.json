@@ -40,7 +40,9 @@
                 "enum": [
                   "email",
                   "fullName",
-                  "id"
+                  "gender",
+                  "id",
+                  "posts.id"
                 ]
               },
               "type": "array",
@@ -129,6 +131,25 @@
           "MALE"
         ]
       },
+      "Post": {
+        "type": "object",
+        "properties": {
+          "author": {
+            "$ref": "#/components/schemas/User"
+          },
+          "content": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "author",
+          "content",
+          "id"
+        ]
+      },
       "User": {
         "type": "object",
         "properties": {
@@ -143,6 +164,12 @@
           },
           "id": {
             "type": "string"
+          },
+          "posts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Post"
+            }
           }
         },
         "required": [
