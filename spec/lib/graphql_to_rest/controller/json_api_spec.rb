@@ -59,4 +59,38 @@ RSpec.describe GraphqlToRest::Controller::JsonApi do
       end
     end
   end
+
+  describe '#action_output_fields' do
+    subject(:action_output_fields) { controller_instance.send(:action_output_fields) }
+
+    context 'without feilds in params' do
+      it 'returns fieldset default value' do
+        expect(action_output_fields).to contain_exactly(:id, :email)
+      end
+    end
+
+    context 'with fields in params' do
+      let(:params) do
+        {
+          fields: { User: 'id,name' }
+        }
+      end
+
+      it 'returns specified fields' do
+        expect(action_output_fields).to contain_exactly(:id, :name)
+      end
+    end
+
+    context 'with nested fields' do
+      let(:params) do
+        {
+          fields: { User: 'id,name,nested.field' }
+        }
+      end
+
+      it 'returns specified fields' do
+        expect(action_output_fields).to contain_exactly(:id, :name, { nested: [:field]})
+      end
+    end
+  end
 end
