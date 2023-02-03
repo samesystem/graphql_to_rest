@@ -65,7 +65,7 @@ RSpec.describe GraphqlToRest::Controller::JsonApi do
 
     context 'without feilds in params' do
       it 'returns fieldset default value' do
-        expect(action_output_fields).to contain_exactly(:id, :email)
+        expect(action_output_fields).to contain_exactly(:id, :__typename, :email)
       end
     end
 
@@ -77,7 +77,7 @@ RSpec.describe GraphqlToRest::Controller::JsonApi do
       end
 
       it 'returns specified fields' do
-        expect(action_output_fields).to contain_exactly(:id, :name)
+        expect(action_output_fields).to contain_exactly(:id, :__typename, :name)
       end
     end
 
@@ -89,7 +89,7 @@ RSpec.describe GraphqlToRest::Controller::JsonApi do
       end
 
       it 'returns specified fields' do
-        expect(action_output_fields).to contain_exactly(:id, :name, { nested: [:field]})
+        expect(action_output_fields).to contain_exactly(:id, :__typename, :name, { nested: [:field]})
       end
     end
   end

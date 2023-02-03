@@ -8,6 +8,8 @@ module GraphqlToRest
   module Controller
     # Configuration for OpenAPI controller
     module JsonApi
+      REQUIRED_OUTPUT_FIELDS = %w[id __typename].freeze
+
       module ClassMethods
         def open_api_configuration_class
           JsonApi::ControllerConfiguration
@@ -30,7 +32,7 @@ module GraphqlToRest
       end
 
       def action_output_fields
-        GraphqlToRest::Controller::JsonApi::FieldsetToGraphqlOutput.call(fieldset: fieldset)
+        GraphqlToRest::Controller::JsonApi::FieldsetToGraphqlOutput.call(fieldset: fieldset | REQUIRED_OUTPUT_FIELDS)
       end
     end
   end
