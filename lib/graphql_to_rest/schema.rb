@@ -26,9 +26,8 @@ module GraphqlToRest
         **general_info,
         paths: paths,
         components: {
-          schemas: components_schemas,
-          securitySchemes: security_schemes,
-          requestBodies: components_request_bodies
+          schemas: components_schemas.merge(components_request_bodies),
+          securitySchemes: security_schemes
         }
       }
     end

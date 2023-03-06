@@ -13,8 +13,14 @@
     }
   ],
   "tags": [
-    "dummy",
-    "oas"
+    {
+      "name": "Dummy",
+      "description": "Dummy API"
+    },
+    {
+      "name": "oas",
+      "description": "OpenAPI 3.0"
+    }
   ],
   "security": [
     {
@@ -29,7 +35,7 @@
         "parameters": [
           {
             "in": "query",
-            "style": "simple",
+            "style": "form",
             "explode": false,
             "required": false,
             "name": "fields[User]",

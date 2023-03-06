@@ -66,6 +66,10 @@ module GraphqlToRest
         action_serializers.serializer_for(type).call(route: self, **kwargs)
       end
 
+      def description
+        graphql_schema_action.description
+      end
+
       private
 
       attr_reader :rails_route

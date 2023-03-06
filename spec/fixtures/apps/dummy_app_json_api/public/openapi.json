@@ -13,8 +13,14 @@
     }
   ],
   "tags": [
-    "dummy",
-    "oas"
+    {
+      "name": "Dummy",
+      "description": "Dummy API"
+    },
+    {
+      "name": "oas",
+      "description": "OpenAPI 3.0"
+    }
   ],
   "security": [
     {
@@ -29,7 +35,7 @@
         "parameters": [
           {
             "in": "query",
-            "style": "simple",
+            "style": "form",
             "explode": false,
             "required": false,
             "name": "fields[User]",
@@ -60,7 +66,7 @@
                     "type": "object",
                     "properties": {
                       "attributes": {
-                        "$ref": "#/components/requestBodies/UserCreateInput"
+                        "$ref": "#/components/schemas/UserCreateInput"
                       }
                     },
                     "required": [
@@ -77,6 +83,7 @@
         },
         "responses": {
           "200": {
+            "description": "Create a user (success response)",
             "content": {
               "application/json": {
                 "schema": {
@@ -177,16 +184,7 @@
           "fullName",
           "id"
         ]
-      }
-    },
-    "securitySchemes": {
-      "Bearer": {
-        "type": "http",
-        "scheme": "bearer",
-        "bearerFormat": "JWT"
-      }
-    },
-    "requestBodies": {
+      },
       "LocationInput": {
         "type": "object",
         "properties": {
@@ -215,12 +213,12 @@
             "$ref": "#/components/schemas/GenderEnum"
           },
           "location": {
-            "$ref": "#/components/requestBodies/LocationInput"
+            "$ref": "#/components/schemas/LocationInput"
           },
           "wishItems": {
             "type": "array",
             "items": {
-              "$ref": "#/components/requestBodies/WishItemInput"
+              "$ref": "#/components/schemas/WishItemInput"
             }
           }
         },
@@ -239,6 +237,13 @@
         "required": [
           "name"
         ]
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
       }
     }
   }

@@ -21,5 +21,21 @@ RSpec.describe GraphqlToRest::Schema::Basic::Paths::GraphqlToSuccessResponse do
         attributes: { '$ref': '#/components/schemas/User' }
       )
     end
+
+    context 'when graphql action has description' do
+      it 'returns graphql action description with "success response" suffix' do
+        expect(call[:'200'][:description]).to eq('Create a user (success response)')
+      end
+    end
+
+    context 'when graphql action does not have description' do
+      before do
+        allow(route).to receive(:description).and_return(nil)
+      end
+
+      it 'returns default description' do
+        expect(call[:'200'][:description]).to eq('Success response')
+      end
+    end
   end
 end

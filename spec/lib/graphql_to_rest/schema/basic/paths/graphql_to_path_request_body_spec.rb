@@ -24,7 +24,7 @@ RSpec.describe GraphqlToRest::Schema::Basic::Paths::GraphqlToPathRequestBody do
                 data: {
                   type: 'object',
                   properties: {
-                    attributes: { '$ref': '#/components/requestBodies/UserCreateInput' }
+                    attributes: { '$ref': '#/components/schemas/UserCreateInput' }
                   },
                   required: %w[attributes]
                 }

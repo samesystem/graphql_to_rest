@@ -38,7 +38,7 @@ module GraphqlToRest
           end
 
           def attributes_reference
-            { '$ref': "#/components/requestBodies/#{open_api_type_name}" }
+            { '$ref': "#/components/schemas/#{open_api_type_name}" }
           end
 
           def request_body_data_properties

@@ -5,7 +5,19 @@ FactoryBot.define do
       routes_params { { app: route_app } }
       route_app { :dummy_app_json_api }
     end
-    tags { %w[dummy oas] }
+    tags do
+      [
+        {
+          name: 'Dummy',
+          description: 'Dummy API'
+        },
+        {
+          name: 'oas',
+          description: 'OpenAPI 3.0'
+        }
+      ]
+    end
+
     servers { [{ url: '/api/v1' }] }
     info do
       {
