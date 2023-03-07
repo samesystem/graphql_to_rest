@@ -92,5 +92,13 @@ RSpec.describe GraphqlToRest::Schema::RouteDecorator do
           .to eq(GraphqlToRest::DummyAppJsonApi::Api::V1::UsersController)
       end
     end
+
+    describe '#description' do
+      subject(:description) { route_decorator.description }
+
+      it 'returns correct description' do
+        expect(description).to eq('Create a user')
+      end
+    end
   end
 end

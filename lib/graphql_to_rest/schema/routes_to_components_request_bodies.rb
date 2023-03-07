@@ -14,7 +14,7 @@ module GraphqlToRest
 
       def components_schemas_for(route, cached_schemas)
         route.open_api_json_for(
-          'components.requestBodies',
+          'components.schemas:requestBodies',
           graphql_type: route.input_type,
           cached_schemas: cached_schemas
         )

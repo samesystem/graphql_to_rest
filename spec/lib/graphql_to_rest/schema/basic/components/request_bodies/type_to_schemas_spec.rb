@@ -23,11 +23,11 @@ RSpec.describe GraphqlToRest::Schema::Basic::Components::RequestBodies::TypeToSc
           'email' => { type: 'string' },
           'fullName' => { type: 'string' },
           'gender' => { '$ref' => '#/components/schemas/GenderEnum' },
-          'location' => { '$ref' => '#/components/requestBodies/LocationInput' },
+          'location' => { '$ref' => '#/components/schemas/LocationInput' },
           'wishItems' => {
             type: 'array',
             items: {
-              '$ref' => '#/components/requestBodies/WishItemInput'
+              '$ref' => '#/components/schemas/WishItemInput'
             }
           }
         },

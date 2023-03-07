@@ -33,6 +33,7 @@ module GraphqlToRest
           def call
             {
               '200': {
+                description: description,
                 content: {
                   'application/json': {
                     schema: schema
@@ -45,6 +46,16 @@ module GraphqlToRest
           private
 
           delegate :open_api_type_name, to: :type_parser, private: true
+
+          def description
+            route_description = route.description
+
+            if route_description
+              "#{route_description} (success response)"
+            else
+              "Success response"
+            end
+          end
 
           def schema
             {

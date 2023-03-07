@@ -10,7 +10,7 @@ module GraphqlToRest
 
           FIELDSET_BASIC_SPECS = {
             in: 'query',
-            style: 'simple',
+            style: 'form',
             explode: false,
             required: false
           }.freeze

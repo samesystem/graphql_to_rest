@@ -15,7 +15,7 @@ RSpec.describe GraphqlToRest::Schema::JsonApi::Paths::RouteToFieldsetParameter d
         name: 'fields[User]',
         in: 'query',
         required: false,
-        style: 'simple',
+        style: 'form',
         explode: false,
         schema: {
           type: 'array',

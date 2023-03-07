@@ -70,7 +70,7 @@ RSpec.describe GraphqlToRest::TypeParsers::GraphqlInputTypeParser do
       let(:unparsed_type) { GraphqlToRest::DummyAppShared::Types::UserCreateInputType }
 
       it 'returns schema reference' do
-        expect(open_api_schema_reference).to eq({ '$ref' => '#/components/requestBodies/UserCreateInput' })
+        expect(open_api_schema_reference).to eq({ '$ref' => '#/components/schemas/UserCreateInput' })
       end
     end
   end

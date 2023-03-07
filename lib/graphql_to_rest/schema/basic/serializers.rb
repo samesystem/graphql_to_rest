@@ -13,9 +13,9 @@ module GraphqlToRest
           'paths.{path}.{method}.responses' => Paths::GraphqlToSuccessResponse,
           'paths.{path}.{method}.requestBody' => Paths::GraphqlToPathRequestBody,
           'paths.{path}.{method}:fromFile' => Paths::RouteToPathExtras,
-          'components.requestBodies' => Components::RequestBodies::TypeToSchemas,
-          'components.requestBodies.properties' => Components::RequestBodies::TypeToSchemas,
           'components.schemas' => Components::Schemas::TypeToSchemas,
+          'components.schemas:requestBodies' => Components::RequestBodies::TypeToSchemas,
+          'components.schemas.properties:requestBodies' => Components::RequestBodies::TypeToSchemas,
         }
 
         def serializer_for(type)
