@@ -69,6 +69,14 @@ module GraphqlToRest
       end
     end
 
+    def referenced_graphql_names
+      @referenced_graphql_names ||= begin
+        require 'graphql_to_rest/schema/fetch_referenced_graphql_names'
+
+        routes.flat_map { |route| FetchReferencedGraphqlNames.call(route: route) }.uniq
+      end
+    end
+
     def call_service(service, **kwargs)
       service.call(**kwargs, schema_builder: self)
     end
