@@ -53,5 +53,5 @@ AllCops:
   TargetRubyVersion: 2.7
   Exclude:
     - bin/*
-    - *.gemspec
+    - "*.gemspec"
     - Rakefile
