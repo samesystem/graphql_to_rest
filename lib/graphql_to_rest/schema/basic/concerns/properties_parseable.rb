@@ -6,7 +6,7 @@ module GraphqlToRest
   class Schema
     module Basic
       # Adds methods for parsing properties.
-      # Expects #type_parser and #allowed_property? to be defined.
+      # Expects #type_parser, #route, and #allowed_property? to be defined.
       module PropertiesParseable
         private
 
@@ -21,7 +21,11 @@ module GraphqlToRest
         end
 
         def unparsed_properties
-          inner_nullable_graphql_object.fields
+          inner_nullable_graphql_object.fields.select { |_name, field| field.visible?(graphql_context) }
+        end
+
+        def graphql_context
+          route.schema_builder.graphql_context
         end
 
         def unfiltered_property_parsers
