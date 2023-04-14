@@ -40,6 +40,7 @@ FactoryBot.define do
     graphql_schema { GraphqlToRest::DummyAppShared::Schema }
     path_schemas_dir { 'spec/fixtures/apps/dummy_app_shared' }
     rails_routes { build_list(:fake_rails_route, 1, routes_params) }
+    graphql_context { {} }
 
     trait :basic do
       route_app { :dummy_app_basic }
@@ -59,7 +60,8 @@ FactoryBot.define do
         security_schemes: security_schemes,
         graphql_schema: graphql_schema,
         path_schemas_dir: path_schemas_dir,
-        rails_routes: rails_routes
+        rails_routes: rails_routes,
+        graphql_context: graphql_context
       )
     end
   end

@@ -9,9 +9,18 @@ module GraphqlToRest
   class Schema
     OPENAPI_VERSION = '3.0.2'
 
-    attr_reader :tags, :servers, :info, :security_schemes, :graphql_schema, :path_schemas_dir
+    attr_reader :tags, :servers, :info, :security_schemes, :graphql_schema, :path_schemas_dir, :graphql_context
 
-    def initialize(tags: [], servers: [], info: {}, security_schemes: [], graphql_schema:, path_schemas_dir:, rails_routes: nil)
+    def initialize(
+      graphql_schema:,
+      path_schemas_dir:,
+      tags: [],
+      servers: [],
+      info: {},
+      security_schemes: [],
+      rails_routes: nil,
+      graphql_context: {}
+    )
       @tags = tags
       @servers = servers
       @info = info
@@ -19,6 +28,7 @@ module GraphqlToRest
       @graphql_schema = graphql_schema
       @path_schemas_dir = path_schemas_dir
       @rails_routes = rails_routes || Rails.application.routes.routes
+      @graphql_context = graphql_context
     end
 
     def as_json
