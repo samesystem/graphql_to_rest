@@ -24,7 +24,7 @@ module GraphqlToRest
       rattr_initialize %i[unparsed_type!]
 
       def open_api_type_name
-        (basic_type_name || graphql_name)
+        basic_type_name || graphql_name
       end
 
       def inner_nullable_graphql_object
