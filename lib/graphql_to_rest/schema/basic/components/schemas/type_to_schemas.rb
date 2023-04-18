@@ -80,6 +80,13 @@ module GraphqlToRest
             def type_parser
               @type_parser ||= type_parser_for(graphql_type)
             end
+
+            def type_parser_for(type)
+              TypeParsers::GraphqlTypeParser.new(
+                unparsed_type: type,
+                unwrap_connection: false
+              )
+            end
           end
         end
       end

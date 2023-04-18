@@ -21,10 +21,14 @@ module GraphqlToRest
         'time' => { type: 'string', format: 'time' }
       }.freeze
 
-      rattr_initialize %i[unparsed_type!]
+      rattr_initialize [:unparsed_type!, { unwrap_connection: true }]
 
       def open_api_type_name
         basic_type_name || graphql_name
+      end
+
+      def connection?
+        connection_type?(unparsed_type)
       end
 
       def inner_nullable_graphql_object
@@ -86,8 +90,12 @@ module GraphqlToRest
         graphql_name.downcase if basic_type_schema
       end
 
+      def connection_type?(type)
+        type.is_a?(Class) && type < GraphQL::Types::Relay::BaseConnection
+      end
+
       def unwrap_type(unwraped_type)
-        if unwraped_type.is_a?(Class) && unwraped_type < GraphQL::Types::Relay::BaseConnection
+        if unwrap_connection && connection_type?(unwraped_type)
           unwrap_type(unwraped_type.node_type)
         elsif unwraped_type.is_a?(GraphQL::Schema::Wrapper)
           unwrap_type(unwraped_type.of_type)
