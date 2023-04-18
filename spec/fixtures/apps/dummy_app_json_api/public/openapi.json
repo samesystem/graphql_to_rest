@@ -181,7 +181,7 @@
                       "type": "object",
                       "properties": {
                         "attributes": {
-                          "$ref": "#/components/schemas/User"
+                          "$ref": "#/components/schemas/UserConnection"
                         }
                       },
                       "required": [
@@ -255,6 +255,17 @@
           "fullName",
           "id"
         ]
+      },
+      "UserConnection": {
+        "type": "object",
+        "properties": {
+          "nodes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/User"
+            }
+          }
+        }
       },
       "LocationInput": {
         "type": "object",

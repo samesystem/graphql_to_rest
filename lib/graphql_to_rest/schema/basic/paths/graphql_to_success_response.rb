@@ -53,7 +53,7 @@ module GraphqlToRest
             if route_description
               "#{route_description} (success response)"
             else
-              "Success response"
+              'Success response'
             end
           end
 
@@ -83,7 +83,10 @@ module GraphqlToRest
           end
 
           def type_parser
-            @type_parser ||= TypeParsers::GraphqlTypeParser.new(unparsed_type: type)
+            @type_parser ||= TypeParsers::GraphqlTypeParser.new(
+              unparsed_type: type,
+              unwrap_connection: false
+            )
           end
         end
       end

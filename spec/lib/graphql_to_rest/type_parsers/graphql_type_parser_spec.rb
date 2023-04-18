@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
 RSpec.describe GraphqlToRest::TypeParsers::GraphqlTypeParser do
-  subject(:graphql_type_name_parser) { described_class.new(unparsed_type: unparsed_type) }
+  subject(:graphql_type_name_parser) do
+    described_class.new(unparsed_type: unparsed_type, **parser_params)
+  end
+
+  let(:parser_params) { {} }
 
   describe '#open_api_type_name' do
     subject(:open_api_type_name) { graphql_type_name_parser.open_api_type_name }
@@ -35,8 +39,18 @@ RSpec.describe GraphqlToRest::TypeParsers::GraphqlTypeParser do
     context 'when type is a Connection' do
       let(:unparsed_type) { GraphqlToRest::DummyAppShared::Types::UserType.connection_type }
 
-      it 'returns unwrapped type' do
-        expect(inner_nullable_graphql_object).to eq(GraphqlToRest::DummyAppShared::Types::UserType)
+      context 'when unwrap_connection is true or not set' do
+        it 'returns unwrapped non-connection type' do
+          expect(inner_nullable_graphql_object).to eq(GraphqlToRest::DummyAppShared::Types::UserType)
+        end
+      end
+
+      context 'when unwrap_connection is false' do
+        let(:parser_params) { { unwrap_connection: false } }
+
+        it 'returns connection type' do
+          expect(inner_nullable_graphql_object).to eq(GraphqlToRest::DummyAppShared::Types::UserType.connection_type)
+        end
       end
     end
   end
@@ -131,6 +145,20 @@ RSpec.describe GraphqlToRest::TypeParsers::GraphqlTypeParser do
       let(:unparsed_type) { GraphQL::Types::String.to_non_null_type }
 
       it { is_expected.to be_required }
+    end
+  end
+
+  describe '#connection?' do
+    context 'when type is connection' do
+      let(:unparsed_type) { GraphqlToRest::DummyAppShared::Types::UserType.connection_type }
+
+      it { is_expected.to be_connection }
+    end
+
+    context 'when type is not connection' do
+      let(:unparsed_type) { GraphqlToRest::DummyAppShared::Types::UserType }
+
+      it { is_expected.not_to be_connection }
     end
   end
 
