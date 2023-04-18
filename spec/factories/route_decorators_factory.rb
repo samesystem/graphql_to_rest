@@ -23,6 +23,10 @@ FactoryBot.define do
       to { 'users#show' }
     end
 
+    trait :users_paginated do
+      to { 'users#index_paginated' }
+    end
+
     initialize_with do
       new(
         rails_route: rails_route,

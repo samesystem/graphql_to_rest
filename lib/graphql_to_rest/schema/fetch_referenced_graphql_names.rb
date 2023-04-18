@@ -28,7 +28,8 @@ module GraphqlToRest
         return [] if compound_field.blank?
 
         field, rest_fields = shift_field(compound_field)
-        type = parent_type.unwrap.fields[field].type
+        unwrapped_parent = build_type_parser(parent_type).inner_nullable_graphql_object
+        type = unwrapped_parent.fields[field].type
         parser = build_type_parser(type)
 
         return [] unless parser.deeply_object?

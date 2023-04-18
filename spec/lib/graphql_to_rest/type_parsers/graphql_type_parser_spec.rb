@@ -31,6 +31,14 @@ RSpec.describe GraphqlToRest::TypeParsers::GraphqlTypeParser do
         expect(inner_nullable_graphql_object).to eq(GraphqlToRest::DummyAppShared::Types::UserType)
       end
     end
+
+    context 'when type is a Connection' do
+      let(:unparsed_type) { GraphqlToRest::DummyAppShared::Types::UserType.connection_type }
+
+      it 'returns unwrapped type' do
+        expect(inner_nullable_graphql_object).to eq(GraphqlToRest::DummyAppShared::Types::UserType)
+      end
+    end
   end
 
   describe '#deeply_scalar?' do

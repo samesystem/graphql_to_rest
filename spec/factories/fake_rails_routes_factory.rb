@@ -3,9 +3,9 @@ FactoryBot.define do
   factory :fake_rails_route, class: 'GraphqlToRest::Test::RailsRoutesHelper::FakeRailsRoute' do
     transient do
       to { 'users#create' }
-      path_suffix { %[update show destroy].include?(action) ? '/:id' : '' }
+      path_suffix { %w[update show destroy].include?(action) ? '/:id' : '' }
     end
-    path { "/api/v1/#{controller}#{path_suffix}(.:format)"  }
+    path { "/api/v1/#{controller}#{path_suffix}(.:format)" }
     controller { to.split('#').first }
     action { to.split('#').last }
     http_method do
@@ -13,6 +13,10 @@ FactoryBot.define do
       mapping.fetch(action, 'get')
     end
     app { 'dummy_app_json_api' }
+
+    trait :users_paginated do
+      to { 'users#index_paginated' }
+    end
 
     trait :basic do
       app { 'dummy_app_basic' }

@@ -87,7 +87,9 @@ module GraphqlToRest
       end
 
       def unwrap_type(unwraped_type)
-        if unwraped_type.is_a?(GraphQL::Schema::Wrapper)
+        if unwraped_type.is_a?(Class) && unwraped_type < GraphQL::Types::Relay::BaseConnection
+          unwrap_type(unwraped_type.node_type)
+        elsif unwraped_type.is_a?(GraphQL::Schema::Wrapper)
           unwrap_type(unwraped_type.of_type)
         else
           unwraped_type
