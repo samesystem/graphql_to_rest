@@ -24,7 +24,7 @@ module GraphqlToRest
       rattr_initialize %i[unparsed_type!]
 
       def open_api_type_name
-        basic_type_name || graphql_name
+        (basic_type_name || graphql_name)
       end
 
       def inner_nullable_graphql_object
@@ -87,7 +87,9 @@ module GraphqlToRest
       end
 
       def unwrap_type(unwraped_type)
-        if unwraped_type.is_a?(GraphQL::Schema::Wrapper)
+        if unwraped_type.is_a?(Class) && unwraped_type < GraphQL::Types::Relay::BaseConnection
+          unwrap_type(unwraped_type.node_type)
+        elsif unwraped_type.is_a?(GraphQL::Schema::Wrapper)
           unwrap_type(unwraped_type.of_type)
         else
           unwraped_type

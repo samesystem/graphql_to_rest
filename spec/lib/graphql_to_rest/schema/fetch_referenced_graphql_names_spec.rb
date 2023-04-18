@@ -11,5 +11,13 @@ RSpec.describe GraphqlToRest::Schema::FetchReferencedGraphqlNames do
     it 'returns graphql names used in given routes' do
       expect(call).to match_array(%w[User Post])
     end
+
+    context 'when route points to paginated type' do
+      let(:route) { build(:route_decorator, :users_paginated) }
+
+      it 'returns graphql connection names used in given routes' do
+        expect(call).to match_array(%w[User Post])
+      end
+    end
   end
 end

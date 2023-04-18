@@ -17,6 +17,13 @@ module GraphqlToRest
                .default_value(%i[id email])
             end
 
+            c.action(:index_paginated) do |a|
+              a.graphql_action(:usersPaginated)
+              a.fieldset_parameter
+               .nested_fields('posts.id')
+               .default_value(%i[id email])
+            end
+
             c.action(:create) do |a|
               a.graphql_action(:createUser)
               a.fieldset_parameter
