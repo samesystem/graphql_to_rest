@@ -23,7 +23,7 @@ module GraphqlToRest
 
       def fieldset
         fieldset_name = open_api_action.fieldset_parameter.name
-        fieldset_name ||= "fields[#{open_api.model}]" if open_api.model
+        fieldset_name ||= "fields[#{open_api.model.name}]" if open_api.model
         keys = fieldset_name.to_s.split(/[\[\]]/).reject(&:blank?)
 
         params.dig(*keys).to_s.split(',').presence || open_api_action.fieldset_parameter.default_value

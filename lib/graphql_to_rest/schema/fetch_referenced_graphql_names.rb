@@ -18,8 +18,7 @@ module GraphqlToRest
       end
 
       def nested_graphql_names
-        nested_fields = route.action_config.fieldset_parameter&.nested_fields || []
-        nested_fields.map do |compound_field|
+        route.action_config.model.nested_fields.map do |compound_field|
           nested_field_graphql_references(route.return_type, compound_field)
         end
       end

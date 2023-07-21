@@ -5,20 +5,13 @@ RSpec.describe GraphqlToRest::Controller::JsonApi::ControllerConfiguration do
   subject(:controller_configuration) { described_class.new }
 
   describe '#model' do
-    subject(:model) { controller_configuration.model }
+    subject(:model) { controller_configuration.model(model_name) }
 
-    context 'when model is not set' do
-      it { is_expected.to be_nil }
-    end
+    let(:model_name) { 'User' }
 
-    context 'when model is set' do
-      let(:model_name) { 'User' }
-
-      before { controller_configuration.model(model_name) }
-
-      it 'returns model name' do
-        expect(model).to eq(model_name)
-      end
+    it 'returns model with given name' do
+      expect(model).to be_a(GraphqlToRest::Controller::JsonApi::ModelConfiguration)
+      expect(model.name).to eq(model_name)
     end
   end
 

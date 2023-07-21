@@ -10,9 +10,9 @@ RSpec.describe GraphqlToRest::Controller::JsonApi do
       include GraphqlToRest::Controller::JsonApi
 
       open_api do |c|
-        c.model('User')
+        c.model('User').default_fields(%w[id email])
+
         c.action(:create) do |a|
-          a.fieldset_parameter.default_value(%w[id email])
           a.graphql_action('createUser')
         end
       end
@@ -63,7 +63,7 @@ RSpec.describe GraphqlToRest::Controller::JsonApi do
   describe '#action_output_fields' do
     subject(:action_output_fields) { controller_instance.send(:action_output_fields) }
 
-    context 'without feilds in params' do
+    context 'without fields in params' do
       it 'returns fieldset default value' do
         expect(action_output_fields).to contain_exactly(:id, :email)
       end
