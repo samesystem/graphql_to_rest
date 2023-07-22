@@ -13,7 +13,7 @@ module GraphqlToRest
 
         def fieldset_parameter
           @fieldset_parameter ||= begin
-            name = "fields[#{controller_config.model.name}]"
+            name = "fields[#{model.name}]"
             parameter = parameter_configuration_class.new(name: name)
             parameter.default_value(model.default_fields)
             parameter
