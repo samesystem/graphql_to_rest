@@ -37,7 +37,7 @@ module GraphqlToRest
           end
 
           def config_enums
-            action_config.fieldset_parameter&.nested_fields || []
+            action_config.model.nested_fields
           end
 
           def type_parser

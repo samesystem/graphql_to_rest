@@ -2,6 +2,7 @@
 
 require 'graphql_to_rest/controller/basic/controller_configuration'
 require_relative './action_configuration'
+require_relative './model_configuration'
 
 module GraphqlToRest
   module Controller
@@ -9,10 +10,9 @@ module GraphqlToRest
       # Configuration for OpenAPI controller
       class ControllerConfiguration < GraphqlToRest::Controller::Basic::ControllerConfiguration
         def model(name = nil)
-          return @model if name.nil?
-
-          @model = name
-          self
+          @model ||= ModelConfiguration.new(name: name)
+          yield(@model) if block_given?
+          @model
         end
 
         private

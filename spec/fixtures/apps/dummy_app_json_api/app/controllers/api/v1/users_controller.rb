@@ -8,27 +8,21 @@ module GraphqlToRest
           include ::GraphqlToRest::Controller::JsonApi
 
           open_api do |c|
-            c.model('User')
+            c.model('User') do |m|
+              m.nested_fields(%i[posts.id])
+              m.default_fields(%i[id email])
+            end
 
             c.action(:show) do |a|
               a.graphql_action(:user)
-              a.fieldset_parameter
-               .nested_fields('posts.id')
-               .default_value(%i[id email])
             end
 
             c.action(:index_paginated) do |a|
               a.graphql_action(:usersPaginated)
-              a.fieldset_parameter
-               .nested_fields('posts.id')
-               .default_value(%i[id email])
             end
 
             c.action(:create) do |a|
               a.graphql_action(:createUser)
-              a.fieldset_parameter
-               .nested_fields('posts.id')
-               .default_value(%i[id email])
               a.graphql_input_type_path(:input)
             end
           end
