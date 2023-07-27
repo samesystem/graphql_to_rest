@@ -19,5 +19,30 @@ RSpec.describe GraphqlToRest::Schema::FetchReferencedGraphqlNames do
         expect(call).to match_array(%w[User Post])
       end
     end
+
+    context 'when controller has non existing nested fields' do
+      let(:route) do
+        instance_double(
+          GraphqlToRest::Schema::RouteDecorator,
+          return_type: GraphqlToRest::DummyAppShared::Types::UserType,
+          action_config: action_config
+        )
+      end
+
+      let(:action_config) do
+        GraphqlToRest::Controller::JsonApi::ActionConfiguration.new(controller_config: controller_config)
+      end
+
+      let(:controller_config) { GraphqlToRest::Controller::JsonApi::ControllerConfiguration.new }
+
+      before do
+        action_config.model.nested_fields(['non_existing_field'])
+      end
+
+      it 'raises error' do
+        expect { call }
+          .to raise_error("Field 'non_existing_field' not found in graphql type 'User'")
+      end
+    end
   end
 end

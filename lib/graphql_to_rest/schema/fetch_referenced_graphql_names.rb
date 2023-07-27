@@ -4,6 +4,8 @@ module GraphqlToRest
   class Schema
     # Fetches referenced GraphQL names
     class FetchReferencedGraphqlNames
+      FieldNotFoundError = Class.new(StandardError)
+
       method_object %i[route!]
 
       def call
@@ -28,12 +30,24 @@ module GraphqlToRest
 
         field, rest_fields = shift_field(compound_field)
         unwrapped_parent = build_type_parser(parent_type).inner_nullable_graphql_object
-        type = unwrapped_parent.fields[field].type
+        type = field_type(field, unwrapped_parent)
         parser = build_type_parser(type)
 
         return [] unless parser.deeply_object?
 
         [parser.graphql_name] + nested_field_graphql_references(type, rest_fields)
+      end
+
+      def field_type(field, unwrapped_parent)
+        field_object = unwrapped_parent.fields[field]
+        if field_object.nil?
+          raise(
+            FieldNotFoundError,
+            "Field '#{field}' not found in graphql type '#{unwrapped_parent.graphql_name}'"
+          )
+        end
+
+        field_object.type
       end
 
       def shift_field(compound_field)
