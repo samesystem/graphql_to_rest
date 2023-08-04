@@ -1,22 +1,76 @@
 # GraphqlToRest
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/graphql_to_rest`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Tool for serving GraphQL schema as fully functional and documented REST + swagger + JSON:API API.
 
 ## Installation
 
 Install the gem and add to the application's Gemfile by executing:
 
+```bash
     $ bundle add graphql_to_rest
+```
 
 If bundler is not being used to manage dependencies, install the gem by executing:
 
+```bash
     $ gem install graphql_to_rest
+```
 
-## Usage
+## Quick start
 
-TODO: Write usage instructions here
+### Include GraphqlToRest controller module in your OpenAPI controllers
+
+```ruby
+module Api
+  # Base controller for all API controllers
+  class OpenApiController < ApplicationController
+    include GraphqlToRest::Controller::JsonApi
+  end
+end
+```
+
+### Add configuration for each controller action
+
+```ruby
+module Api
+  # Base controller for all API controllers
+  class UsersController < OpenApiController
+    open_api do |c|
+      c.model('User').default_fields(%i[id email fullName])
+
+      c.action(:index) do |a|
+        a.graphql_action(:getUsers)
+      end
+    end
+
+    def index
+      # MakeGraphqlQuery - imaginary class that makes actual GQL requests
+      # `graphql_action_name` and `action_output_fields` - methods provided by GraphqlToRest
+      MakeGraphqlQuery.call(
+        action_name: graphql_action_name,
+        output_fields: action_output_fields
+      )
+    end
+  end
+end
+```
+
+### Add rake task for generating openapi.json file
+
+Put this somewhere in the rake task
+
+```ruby
+    # lib/tasks/openapi.rake
+    desc 'Updates openapi.json file'
+    task update_openapi: :environment do
+      open_api = GraphqlToRest::Schema.new(
+        graphql_schema: Schema,
+        path_schemas_dir: Rails.root.join('lib/open_api/path_schemas')
+      )
+
+      File.write('public/openapi.json', JSON.pretty_generate(open_api.as_json))
+    end
+```
 
 ## Development
 
