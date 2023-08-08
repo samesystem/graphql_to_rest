@@ -18,6 +18,21 @@ module GraphqlToRest
             end
 
             c.action(:index_paginated) do |a|
+              a.query_parameter(:filter).graphql_input_type_path(:filter)
+              a.graphql_action(:usersPaginated)
+            end
+
+            c.action(:index_explicit_params) do |a|
+              a.query_parameter('filter[status]')
+               .optional
+               .graphql_input_type_path(%i[filter status])
+               .default_value('ACTIVE')
+              a.query_parameter('filter[name]')
+               .optional
+               .graphql_input_type_path(%i[filter name])
+              a.query_parameter('filter[id]')
+               .optional
+               .graphql_input_type_path(%i[filter id])
               a.graphql_action(:usersPaginated)
             end
 

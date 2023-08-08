@@ -27,6 +27,10 @@ FactoryBot.define do
       to { 'users#index_paginated' }
     end
 
+    trait :users_index_explicit_params do
+      to { 'users#index_explicit_params' }
+    end
+
     initialize_with do
       new(
         rails_route: rails_route,

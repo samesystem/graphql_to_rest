@@ -21,9 +21,10 @@ module GraphqlToRest
             {
               **FIELDSET_BASIC_SPECS,
               name: parameter_name,
+              allowReserved: true,
               description: description,
               schema: schema
-            }
+            }.then { |schema| sorted_hash(schema) }
           end
 
           private
@@ -43,17 +44,12 @@ module GraphqlToRest
             {
               items: items_open_api_json,
               type: 'array',
-              **default_value_params,
-              **extra_params
-            }
+              **default_value_params
+            }.then { |schema| sorted_hash(schema) }
           end
 
           def items_open_api_json
             route.open_api_json_for('paths.{path}.{method}.parameters.items:fieldset')
-          end
-
-          def extra_params
-            RouteToParameters::DEFAULT_PARAMETER_OPTIONS[parameter_name] || {}
           end
 
           def default_value_params
@@ -73,6 +69,10 @@ module GraphqlToRest
 
           def build_type_parser(unparsed_type)
             TypeParsers::GraphqlTypeParser.new(unparsed_type: unparsed_type)
+          end
+
+          def sorted_hash(hash)
+            hash.sort_by { |k, _| k.to_s }.to_h
           end
         end
       end

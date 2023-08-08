@@ -43,6 +43,10 @@ module GraphqlToRest
         inner_nullable_graphql_object < GraphQL::Schema::Object
       end
 
+      def deeply_input_object?
+        inner_nullable_graphql_object < GraphQL::Schema::InputObject
+      end
+
       def deeply_enum?
         inner_nullable_graphql_object < GraphQL::Schema::Enum
       end

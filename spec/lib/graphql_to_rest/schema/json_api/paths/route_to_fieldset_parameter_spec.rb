@@ -17,6 +17,7 @@ RSpec.describe GraphqlToRest::Schema::JsonApi::Paths::RouteToFieldsetParameter d
         required: false,
         style: 'form',
         explode: false,
+        allowReserved: true,
         schema: {
           type: 'array',
           default: 'id,email',

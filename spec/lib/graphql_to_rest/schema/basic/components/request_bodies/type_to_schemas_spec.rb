@@ -15,7 +15,7 @@ RSpec.describe GraphqlToRest::Schema::Basic::Components::RequestBodies::TypeToSc
     let(:cached_schemas) { {} }
 
     it 'returns correct schemas for return type and inner types' do
-      expect(call.keys).to match_array(%w[UserCreateInput LocationInput WishItemInput])
+      expect(call.keys).to match_array(%w[UserCreateInput LocationInput WishItemInput GenderEnum])
 
       expect(call['UserCreateInput']).to eq(
         type: 'object',

@@ -28,6 +28,17 @@ RSpec.describe GraphqlToRest::Schema::RouteDecorator do
       end
     end
 
+    describe '#input_type_for' do
+      subject(:input_type_for) { route_decorator.input_type_for(parameter) }
+
+      let(:rails_route) { build(:fake_rails_route, :users_paginated) }
+      let(:parameter) { route_decorator.action_config.query_parameter(:filter) }
+
+      it 'returns correct input type' do
+        expect(input_type_for.to_type_signature).to eq('UsersFilter!')
+      end
+    end
+
     describe '#return_type' do
       subject(:return_type) { route_decorator.return_type.to_type_signature }
 
