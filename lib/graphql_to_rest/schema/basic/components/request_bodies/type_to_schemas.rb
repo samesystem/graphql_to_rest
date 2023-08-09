@@ -17,10 +17,6 @@ module GraphqlToRest
 
             private
 
-            def schema_for_graphql_enum
-              {}
-            end
-
             def unparsed_properties
               inner_nullable_graphql_object.arguments
             end

@@ -36,7 +36,7 @@ module GraphqlToRest
         **general_info,
         paths: paths,
         components: {
-          schemas: components_schemas.merge(components_request_bodies),
+          schemas: all_components_schemas,
           securitySchemes: security_schemes
         }
       }
@@ -94,6 +94,10 @@ module GraphqlToRest
     private
 
     attr_reader :rails_routes
+
+    def all_components_schemas
+      components_schemas.merge(components_request_bodies)
+    end
 
     def server_urls
       @server_urls ||= servers.map { _1[:url] }

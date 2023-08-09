@@ -17,8 +17,8 @@ module GraphqlToRest
           private
 
           delegate :http_method, :open_api_path, :action_config, :return_type,
-                  :input_type, :schema_builder,
-                  to: :route, private: true
+                   :input_type, :schema_builder,
+                   to: :route, private: true
 
           delegate :path_schemas_dir, to: :schema_builder, private: true
 

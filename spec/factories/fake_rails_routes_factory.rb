@@ -4,8 +4,9 @@ FactoryBot.define do
     transient do
       to { 'users#create' }
       path_suffix { %w[update show destroy].include?(action) ? '/:id' : '' }
+      path_action { %w[index create update show destroy].include?(action) ? '' : "/#{action}" }
     end
-    path { "/api/v1/#{controller}#{path_suffix}(.:format)" }
+    path { "/api/v1/#{controller}#{path_suffix}#{path_action}(.:format)" }
     controller { to.split('#').first }
     action { to.split('#').last }
     http_method do
@@ -16,6 +17,10 @@ FactoryBot.define do
 
     trait :users_paginated do
       to { 'users#index_paginated' }
+    end
+
+    trait :users_index_explicit_params do
+      to { 'users#index_explicit_params' }
     end
 
     trait :basic do

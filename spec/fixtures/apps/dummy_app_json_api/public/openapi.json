@@ -34,13 +34,14 @@
       "post": {
         "parameters": [
           {
-            "in": "query",
-            "style": "form",
-            "explode": false,
-            "required": false,
-            "name": "fields[User]",
+            "allowReserved": true,
             "description": "Comma separated list of #/components/schemas/User fields that must be returned",
+            "explode": false,
+            "in": "query",
+            "name": "fields[User]",
+            "required": false,
             "schema": {
+              "default": "id,email",
               "items": {
                 "type": "string",
                 "enum": [
@@ -51,9 +52,9 @@
                   "posts.id"
                 ]
               },
-              "type": "array",
-              "default": "id,email"
-            }
+              "type": "array"
+            },
+            "style": "form"
           }
         ],
         "requestBody": {
@@ -126,17 +127,20 @@
             }
           }
         }
-      },
+      }
+    },
+    "/users/index_paginated": {
       "get": {
         "parameters": [
           {
-            "in": "query",
-            "style": "form",
-            "explode": false,
-            "required": false,
-            "name": "fields[User]",
+            "allowReserved": true,
             "description": "Comma separated list of #/components/schemas/User fields that must be returned",
+            "explode": false,
+            "in": "query",
+            "name": "fields[User]",
+            "required": false,
             "schema": {
+              "default": "id,email",
               "items": {
                 "type": "string",
                 "enum": [
@@ -147,8 +151,127 @@
                   "posts.id"
                 ]
               },
+              "type": "array"
+            },
+            "style": "form"
+          },
+          {
+            "allowReserved": true,
+            "explode": true,
+            "in": "query",
+            "name": "filter",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/UsersFilter"
+            },
+            "style": "deepObject"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Paginated users list (success response)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "links": {
+                      "type": "object",
+                      "properties": {
+                        "self": {
+                          "type": "string",
+                          "format": "uri"
+                        },
+                        "related": {
+                          "type": "string",
+                          "format": "uri"
+                        }
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "attributes": {
+                          "$ref": "#/components/schemas/UserConnection"
+                        }
+                      },
+                      "required": [
+                        "attributes"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/index_explicit_params": {
+      "get": {
+        "parameters": [
+          {
+            "allowReserved": true,
+            "description": "Comma separated list of #/components/schemas/User fields that must be returned",
+            "explode": false,
+            "in": "query",
+            "name": "fields[User]",
+            "required": false,
+            "schema": {
+              "default": "id,email",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "email",
+                  "fullName",
+                  "gender",
+                  "id",
+                  "posts.id"
+                ]
+              },
+              "type": "array"
+            },
+            "style": "form"
+          },
+          {
+            "allowReserved": true,
+            "in": "query",
+            "name": "filter[id]",
+            "required": false,
+            "schema": {
               "type": "array",
-              "default": "id,email"
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "allowReserved": true,
+            "in": "query",
+            "name": "filter[name]",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "allowReserved": true,
+            "default": "ACTIVE",
+            "in": "query",
+            "name": "filter[status]",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/StatusEnum"
+              }
             }
           }
         ],
@@ -228,6 +351,13 @@
           "id"
         ]
       },
+      "StatusEnum": {
+        "type": "string",
+        "enum": [
+          "Active",
+          "Inactive"
+        ]
+      },
       "User": {
         "type": "object",
         "properties": {
@@ -266,6 +396,31 @@
             }
           }
         }
+      },
+      "UsersFilter": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "name": {
+            "type": "string"
+          },
+          "status": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StatusEnum"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "status"
+        ]
       },
       "LocationInput": {
         "type": "object",

@@ -18,8 +18,6 @@ module GraphqlToRest
               super || referenced_graphql_names.include?(property_parser.graphql_name)
             end
 
-            private
-
             def referenced_graphql_names
               @referenced_graphql_names ||= route.schema_builder.referenced_graphql_names
             end

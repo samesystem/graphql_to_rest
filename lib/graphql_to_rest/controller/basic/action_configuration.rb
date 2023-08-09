@@ -7,6 +7,8 @@ module GraphqlToRest
     module Basic
       # Configuration for OpenAPI controller action
       class ActionConfiguration
+        attr_reader :query_parameters, :path_parameters
+
         def initialize(controller_config:)
           @controller_config = controller_config
           @query_parameters = {}
@@ -54,7 +56,7 @@ module GraphqlToRest
         attr_reader :controller_config
 
         def build_parameter_configuration(**kwargs)
-          parameter_configuration_class.new(kwargs)
+          parameter_configuration_class.new(**kwargs)
         end
       end
     end

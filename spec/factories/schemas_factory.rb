@@ -42,7 +42,8 @@ FactoryBot.define do
     rails_routes do
       [
         build(:fake_rails_route, routes_params),
-        build(:fake_rails_route, :users_paginated, routes_params)
+        build(:fake_rails_route, :users_paginated, routes_params),
+        build(:fake_rails_route, :users_index_explicit_params, routes_params)
       ]
     end
     graphql_context { {} }
