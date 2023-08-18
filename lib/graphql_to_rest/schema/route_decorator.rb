@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative './extract_nested_type'
+
 module GraphqlToRest
   class Schema
     # Adds handy OpenAPI methods on top of rails route
@@ -21,15 +23,19 @@ module GraphqlToRest
       def input_type_for(parameter)
         return nil if parameter.graphql_input_type_path.empty?
 
-        nesting_keys = parameter.graphql_input_type_path.map(&:to_s)
-        nesting_keys.reduce(graphql_schema_action) do |type, key|
-          final_type = type.respond_to?(:unwrap) ? type.unwrap : type
-          final_type.arguments.fetch(key).type
-        end
+        Schema::ExtractNestedType.call(
+          type: graphql_schema_action,
+          nesting_keys: parameter.graphql_input_type_path
+        )
       end
 
       def return_type
-        graphql_schema_action.type
+        return graphql_schema_action.type if action_config.graphql_output_type_path.empty?
+
+        Schema::ExtractNestedType.call(
+          type: graphql_schema_action.type,
+          nesting_keys: action_config.graphql_output_type_path
+        )
       end
 
       def action_config
