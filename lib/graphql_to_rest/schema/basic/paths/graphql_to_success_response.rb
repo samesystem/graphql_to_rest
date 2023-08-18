@@ -69,6 +69,19 @@ module GraphqlToRest
           end
 
           def data
+            return list_data if type.list?
+
+            object_data
+          end
+
+          def list_data
+            {
+              type: 'array',
+              items: object_data
+            }
+          end
+
+          def object_data
             {
               type: 'object',
               properties: {
