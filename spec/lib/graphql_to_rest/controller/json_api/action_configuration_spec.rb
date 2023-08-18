@@ -53,4 +53,24 @@ RSpec.describe GraphqlToRest::Controller::JsonApi::ActionConfiguration do
       end
     end
   end
+
+  describe '#graphql_output_type_path' do
+    subject(:graphql_output_type_path) { action_configuration.graphql_output_type_path }
+
+    context 'when path is not set' do
+      it { is_expected.to be_empty }
+    end
+
+    context 'when path is set' do
+      let(:path) { %i[path to nested field] }
+
+      before do
+        action_configuration.graphql_output_type_path(path)
+      end
+
+      it 'returns set path' do
+        expect(graphql_output_type_path).to eq(path)
+      end
+    end
+  end
 end

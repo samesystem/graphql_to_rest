@@ -42,8 +42,32 @@ RSpec.describe GraphqlToRest::Schema::RouteDecorator do
     describe '#return_type' do
       subject(:return_type) { route_decorator.return_type.to_type_signature }
 
+      let(:rails_route) { build(:fake_rails_route, :users_paginated) }
+
       it 'returns correct return type' do
-        expect(return_type).to eq('User')
+        expect(return_type).to eq('UserConnection')
+      end
+
+      context 'when action is configured to point to a nested graphql type' do
+        context 'with 1 level nesting' do
+          before do
+            allow(route_decorator.action_config).to receive(:graphql_output_type_path).and_return(%i[nodes])
+          end
+
+          it 'returns nested return type' do
+            expect(return_type).to eq('[User]')
+          end
+        end
+
+        context 'with 2 level nesting' do
+          before do
+            allow(route_decorator.action_config).to receive(:graphql_output_type_path).and_return(%i[nodes id])
+          end
+
+          it 'returns nested return type' do
+            expect(return_type).to eq('[ID!]')
+          end
+        end
       end
     end
 

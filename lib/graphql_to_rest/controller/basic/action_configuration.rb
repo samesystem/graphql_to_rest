@@ -44,6 +44,13 @@ module GraphqlToRest
           self
         end
 
+        def graphql_output_type_path(nesting = nil)
+          return @graphql_output_type_path || [] if nesting.nil?
+
+          @graphql_output_type_path = Array(nesting)
+          self
+        end
+
         def serializers
           @serializers ||= begin
             require 'graphql_to_rest/schema/basic/serializers'
