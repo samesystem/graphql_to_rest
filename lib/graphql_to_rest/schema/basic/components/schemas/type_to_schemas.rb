@@ -50,7 +50,7 @@ module GraphqlToRest
             end
 
             def properties
-              property_parsers.transform_values { _1.open_api_schema_reference }
+              property_parsers.transform_values(&:open_api_schema_reference)
             end
 
             def schemas_for_properties

@@ -52,6 +52,16 @@ RSpec.describe GraphqlToRest::Schema::Basic::Components::RequestBodies::TypeToSc
       )
     end
 
+    context 'when graphql_type has non-visible arguments' do
+      before do
+        allow(graphql_type.arguments['location']).to receive(:visible?).and_return(false)
+      end
+
+      it 'returns only visible arguments' do
+        expect(call.keys).to match_array(%w[UserCreateInput WishItemInput GenderEnum])
+      end
+    end
+
     context 'when graphql_type is nil' do
       let(:graphql_type) { nil }
 

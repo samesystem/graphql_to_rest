@@ -18,7 +18,7 @@ module GraphqlToRest
             private
 
             def unparsed_properties
-              inner_nullable_graphql_object.arguments
+              inner_nullable_graphql_object.arguments.select { |_name, argument| argument.visible?(graphql_context) }
             end
 
             def type_parser_for(type)
