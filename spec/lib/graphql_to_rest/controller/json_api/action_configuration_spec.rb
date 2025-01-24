@@ -73,4 +73,26 @@ RSpec.describe GraphqlToRest::Controller::JsonApi::ActionConfiguration do
       end
     end
   end
+
+  describe '#model' do
+    subject(:model) { action_configuration.model }
+
+    before { controller_config.model('User') }
+
+    it 'returns the model configuration' do
+      expect(model).to be_a(GraphqlToRest::Controller::JsonApi::ModelConfiguration)
+    end
+
+    it 'inherits the model name from a controller configuration' do
+      expect(model.name).to eq('User')
+    end
+
+    context 'when the model name is provided' do
+      subject(:model) { action_configuration.model('AnotherResponse') }
+
+      it 'overrides the model name' do
+        expect(model.name).to eq('AnotherResponse')
+      end
+    end
+  end
 end
