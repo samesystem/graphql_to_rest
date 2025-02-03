@@ -7,8 +7,8 @@ module GraphqlToRest
     module JsonApi
       # Configuration for OpenAPI controller action
       class ActionConfiguration < GraphqlToRest::Controller::Basic::ActionConfiguration
-        def model
-          controller_config.model
+        def model(name = nil)
+          @model ||= name.present? ? ModelConfiguration.new(name: name) : controller_config.model
         end
 
         def fieldset_parameter
