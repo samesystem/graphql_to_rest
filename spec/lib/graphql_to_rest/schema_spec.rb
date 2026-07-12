@@ -24,5 +24,17 @@ RSpec.describe GraphqlToRest::Schema do
         expect(schema.as_json.deep_symbolize_keys).to eq(dumped_json)
       end
     end
+
+    context 'when routes are wrapped in an optional scope segment' do
+      subject(:schema) { build(:schema, :json_api, rails_routes: [scoped_route]) }
+
+      let(:scoped_route) do
+        build(:fake_rails_route, app: 'dummy_app_json_api', path: '(/:tenant_token)/api/v1/users(.:format)')
+      end
+
+      it 'still selects the route and keeps the unscoped path key' do
+        expect(schema.as_json[:paths].keys).to contain_exactly('/users')
+      end
+    end
   end
 end
