@@ -105,7 +105,7 @@ module GraphqlToRest
 
     def rails_api_routes
       rails_routes.select do |route|
-        route_url = route.path.spec.to_s
+        route_url = route.path.spec.to_s.sub(OPTIONAL_SCOPE_PREFIX, '')
         server_urls.any? { |prefix| route_url.start_with?(prefix) }
       end
     end

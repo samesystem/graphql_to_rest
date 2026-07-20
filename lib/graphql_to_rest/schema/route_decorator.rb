@@ -97,7 +97,7 @@ module GraphqlToRest
 
       def route_path
         @route_path ||= begin
-          rails_path = rails_route.path.spec.to_s
+          rails_path = rails_route.path.spec.to_s.sub(OPTIONAL_SCOPE_PREFIX, '')
           rails_path.sub(%r{^/api/v\d+}, '').sub('(.:format)', '')
         end
       end
