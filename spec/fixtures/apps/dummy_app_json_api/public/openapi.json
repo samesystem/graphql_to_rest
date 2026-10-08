@@ -326,6 +326,7 @@
   "components": {
     "schemas": {
       "GenderEnum": {
+        "title": "GenderEnum",
         "type": "string",
         "enum": [
           "FEMALE",
@@ -333,6 +334,7 @@
         ]
       },
       "Post": {
+        "title": "Post",
         "type": "object",
         "properties": {
           "author": {
@@ -352,6 +354,7 @@
         ]
       },
       "StatusEnum": {
+        "title": "StatusEnum",
         "type": "string",
         "enum": [
           "Active",
@@ -359,6 +362,7 @@
         ]
       },
       "User": {
+        "title": "User",
         "type": "object",
         "properties": {
           "email": {
@@ -387,6 +391,7 @@
         ]
       },
       "UserConnection": {
+        "title": "UserConnection",
         "type": "object",
         "properties": {
           "nodes": {
@@ -398,6 +403,7 @@
         }
       },
       "UsersFilter": {
+        "title": "UsersFilter",
         "type": "object",
         "properties": {
           "id": {
@@ -423,6 +429,7 @@
         ]
       },
       "LocationInput": {
+        "title": "LocationInput",
         "type": "object",
         "properties": {
           "city": {
@@ -438,6 +445,7 @@
         ]
       },
       "UserCreateInput": {
+        "title": "UserCreateInput",
         "type": "object",
         "properties": {
           "email": {
@@ -465,6 +473,7 @@
         ]
       },
       "WishItemInput": {
+        "title": "WishItemInput",
         "type": "object",
         "properties": {
           "name": {

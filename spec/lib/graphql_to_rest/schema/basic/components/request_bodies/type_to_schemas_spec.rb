@@ -18,6 +18,7 @@ RSpec.describe GraphqlToRest::Schema::Basic::Components::RequestBodies::TypeToSc
       expect(call.keys).to match_array(%w[UserCreateInput LocationInput WishItemInput GenderEnum])
 
       expect(call['UserCreateInput']).to eq(
+        title: 'UserCreateInput',
         type: 'object',
         properties: {
           'email' => { type: 'string' },
@@ -35,6 +36,7 @@ RSpec.describe GraphqlToRest::Schema::Basic::Components::RequestBodies::TypeToSc
       )
 
       expect(call['LocationInput']).to eq(
+        title: 'LocationInput',
         type: 'object',
         properties: {
           'country' => { type: 'string' },
@@ -44,6 +46,7 @@ RSpec.describe GraphqlToRest::Schema::Basic::Components::RequestBodies::TypeToSc
       )
 
       expect(call['WishItemInput']).to eq(
+        title: 'WishItemInput',
         type: 'object',
         properties: {
           'name' => { type: 'string' }

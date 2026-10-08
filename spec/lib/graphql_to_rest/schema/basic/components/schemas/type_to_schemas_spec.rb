@@ -18,6 +18,7 @@ RSpec.describe GraphqlToRest::Schema::Basic::Components::Schemas::TypeToSchemas 
       expect(call.keys).to match_array(%w[User GenderEnum])
       expect(call).to eq(
         'User' => {
+          title: 'User',
           type: 'object',
           properties: {
             'id' => { type: 'string' },
@@ -28,6 +29,7 @@ RSpec.describe GraphqlToRest::Schema::Basic::Components::Schemas::TypeToSchemas 
           required: %w[email fullName id],
         },
         'GenderEnum' => {
+          title: 'GenderEnum',
           type: 'string',
           enum: %w[FEMALE MALE]
         }
