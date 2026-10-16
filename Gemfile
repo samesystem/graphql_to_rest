@@ -6,4 +6,3 @@ source "https://rubygems.org"
 gemspec
 
 gem 'simplecov', require: false, group: :test
-gem 'codecov', require: false, group: :test
