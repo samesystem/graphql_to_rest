@@ -24,7 +24,7 @@ RSpec.describe GraphqlToRest::Schema::Basic::Paths::GraphqlToPathRequestBody do
                 data: {
                   type: 'object',
                   properties: {
-                    attributes: { '$ref': '#/components/schemas/UserCreateInput' }
+                    attributes: { '$ref' => '#/components/schemas/UserCreateInput' }
                   },
                   required: %w[attributes]
                 }
@@ -34,6 +34,16 @@ RSpec.describe GraphqlToRest::Schema::Basic::Paths::GraphqlToPathRequestBody do
           }
         }
       )
+    end
+
+    context 'when input is a list' do
+      let(:graphql_input) { GraphqlToRest::DummyAppShared::Types::UserCreateInputType.to_non_null_type.to_list_type }
+
+      it 'returns attributes as an array' do
+        attributes = call.dig('content', 'application/json', 'schema', :properties, :data, :properties, :attributes)
+
+        expect(attributes).to eq(type: 'array', items: { '$ref' => '#/components/schemas/UserCreateInput' })
+      end
     end
   end
 end
