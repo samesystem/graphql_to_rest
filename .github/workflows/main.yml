@@ -4,11 +4,9 @@ jobs:
   specs:
     strategy:
       matrix:
-        ruby-version: ['2.7', '3.0', '3.1']
+        ruby-version: ['3.0', '3.1']
 
     runs-on: ubuntu-latest
-    env:
-      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
     steps:
       - uses: actions/checkout@v2
       - uses: ruby/setup-ruby@v1
@@ -17,4 +15,7 @@ jobs:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
       - run: bundle exec rake
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: coverage/coverage.json
