@@ -50,7 +50,7 @@ Style/ClassAndModuleChildren:
 
 AllCops:
   NewCops: disable # TODO: enable
-  TargetRubyVersion: 2.7
+  TargetRubyVersion: 3.0
   Exclude:
     - bin/*
     - "*.gemspec"
