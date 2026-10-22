@@ -14,8 +14,13 @@ jobs:
           ruby-version: ${{ matrix.ruby-version }}
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
       - run: bundle exec rake
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5
+      - name: Add coverage to job summary
+        if: always() && hashFiles('coverage/.last_run.json') != ''
+        run: |
+          echo "Line coverage (Ruby ${{ matrix.ruby-version }}): $(jq -r '.result.line' coverage/.last_run.json)%" >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload coverage report
+        if: always() && hashFiles('coverage/index.html') != ''
+        uses: actions/upload-artifact@v4
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: coverage/coverage.json
+          name: coverage-ruby-${{ matrix.ruby-version }}
+          path: coverage/

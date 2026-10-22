@@ -3,12 +3,9 @@
 if ENV['COVERAGE'] || ENV['CI']
   require 'simplecov'
 
-  if ENV['CI']
-    require 'simplecov_json_formatter'
-    SimpleCov.formatter = SimpleCov::Formatter::JSONFormatter
+  SimpleCov.start do
+    minimum_coverage 98 if ENV['CI']
   end
-
-  SimpleCov.start
 end
 
 require 'graphql_to_rest'
