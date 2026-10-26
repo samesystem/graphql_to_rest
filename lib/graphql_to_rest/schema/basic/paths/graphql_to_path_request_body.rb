@@ -23,7 +23,7 @@ module GraphqlToRest
 
           private
 
-          delegate :open_api_type_name, to: :type_parser, private: true
+          delegate :open_api_schema_reference, to: :type_parser, private: true
 
           def input_object
             type_parser.inner_nullable_graphql_object
@@ -37,16 +37,12 @@ module GraphqlToRest
             }
           end
 
-          def attributes_reference
-            { '$ref': "#/components/schemas/#{open_api_type_name}" }
-          end
-
           def request_body_data_properties
             {
               data: {
                 type: 'object',
                 properties: {
-                  attributes: attributes_reference
+                  attributes: open_api_schema_reference
                 },
                 required: %w[attributes]
               }
