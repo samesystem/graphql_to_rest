@@ -17,6 +17,7 @@ RSpec.describe GraphqlToRest::Schema::JsonApi::Components::Schemas::TypeToSchema
     it 'returns correct schemas for return type and inner enum types' do
       expect(call.keys).to match_array(%w[User GenderEnum Post])
       expect(call['User']).to eq(
+        title: 'User',
         type: 'object',
         properties: {
           'id' => { type: 'string' },

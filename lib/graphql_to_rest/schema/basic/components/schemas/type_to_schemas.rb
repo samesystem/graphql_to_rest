@@ -33,6 +33,7 @@ module GraphqlToRest
             def schema_for_graphql_object
               @schema_for_graphql_object ||= {
                 open_api_type_name => {
+                  title: open_api_type_name,
                   type: 'object',
                   properties: properties,
                   required: required_properties.presence
@@ -43,6 +44,7 @@ module GraphqlToRest
             def schema_for_graphql_enum
               {
                 open_api_type_name => {
+                  title: open_api_type_name,
                   type: 'string',
                   enum: inner_nullable_graphql_object.values.keys
                 }
